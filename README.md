@@ -1,24 +1,19 @@
 # BLT-VS
-BLT-class recurrent neural network designed to resemble the ventral stream
+## BLT-class recurrent neural network designed to resemble the ventral stream. Critical addition to BLT: separation of the bottom-up and top-down information flows.
 
-Info about design choices in BLT_VS:
+---------------------------------------------------
 
-Retina -> LGN -> V1 -> V2 -> V3 -> V4 -> IT -> Readout: kernel size and strides computed to match mean RF sizes for each ROI, assuming a 5deg image presentation for 224px images (additionally there's a provision for 128px in case you need a smaller network), channel size computed using #neurons comparison
+### Info about design choices in BLT_VS:
 
-Avg. RF sizes (radii at 2.5deg): Retina: 0.18deg (Table 1, P-cells-surround https://www.sciencedirect.com/science/article/pii/0042698994E0066T), LGN: 0.4 (Fig.5 https://www.jneurosci.org/content/22/1/338.full), V1: 0.75, V2: 0.8, V3: 1.37, V4: 1.85, LOC: 2.48 (Fig. 4 https://www.jneurosci.org/content/jneuro/31/38/13604.full.pdf)
-
-Avg. #neurons: Retina: 300k, LGN: 450k, V1: 98M, V2: 68.6M, V3: 39.2M, V4: 19.6M, LOC: 39.2M (see txt below - extremely crude approximations using chatgpt-o1-preview). Now there's 4 kinds of pyramidal cells in cortical columns it seems (see Fig in Box 1 https://www.nature.com/articles/nature12654) so we divide the numbers by half as we only care about the bottom-up and top-down pathways. So scaling is [1,1,326,229,131,65,131] - too large so I'll use relative scale - based roughly on square root - [1,1,18,15,11,8,11]
-
-For lateral connections, see Fig.6 of https://www.jneurosci.org/content/22/19/8633.long - visual field multiplication factor of around 2.5 found in V1, corresponding to a particular cortical distance. This implies the magnification factor reduces as we go to higher RF regions - I'll just use ks of 5 here (3 for 128px). Using depthwise separable convolutions to reduce #params (spread kernel and then mix channels)
-
-For topdown connections, we will use the same kernel and stride info as bottom-up connections and then scale output during forward pass implicitly with transposed convolutions
-
-For the prereadout layer, the BU output is num_classes+100 dims with conv layer kernel_size 5 (3 for 128px), then avgpool + slice classes -> losses, while the conv output (relued) goes back to LOC via transposed conv - this ensures we maintain spatial info for TD connections; we add features to maintain orientation, color, and other such info.
-
-Skip connections info - only V4 receives skip connections from V1, and only V1 receives skip connections from V4; although all layers from V1 to V4 are connected with each other (https://academic.oup.com/cercor/article/1/1/1/408896?login=true), we only add these two long-range connection for simplicity here. They are also modeled as depthwise separable convolutions to save parameters. These connections ae additive to the bottom-up and top-down connections (https://www.jneurosci.org/content/13/9/3681.long).
-
-Connections to and from the pulvinar are not included - they potentially become important for attention and other such tasks, but for now, we'll keep it simple.
-The separate bottom-up and top-down streams, and multiplicative interactions (whoever is on distal dendrite is the multiplier), are inspired by cortical organisation, see Fig in Box 1 of https://www.nature.com/articles/nature12654. Lateral connections come and go in the same layers as BU and TD (https://www.jneurosci.org/content/3/5/1116.long) and they are additive as they latch onto proximal dendrites (https://onlinelibrary.wiley.com/doi/abs/10.1002/cne.903050303)
+- Retina -> LGN -> V1 -> V2 -> V3 -> V4 -> IT -> Readout: kernel size and strides computed to match mean RF sizes for each ROI, assuming a 5deg image presentation for 224px images (additionally there's a provision for 128px in case you need a smaller network), channel size computed using #neurons comparison
+- Avg. RF sizes (radii at 2.5deg): Retina: 0.18deg (Table 1, P-cells-surround https://www.sciencedirect.com/science/article/pii/0042698994E0066T), LGN: 0.4 (Fig.5 https://www.jneurosci.org/content/22/1/338.full), V1: 0.75, V2: 0.8, V3: 1.37, V4: 1.85, LOC: 2.48 (Fig. 4 https://www.jneurosci.org/content/jneuro/31/38/13604.full.pdf)
+- Avg. #neurons: Retina: 300k, LGN: 450k, V1: 98M, V2: 68.6M, V3: 39.2M, V4: 19.6M, LOC: 39.2M (see txt below - extremely crude approximations using chatgpt-o1-preview). Now there's 4 kinds of pyramidal cells in cortical columns it seems (see Fig in Box 1 https://www.nature.com/articles/nature12654) so we divide the numbers by half as we only care about the bottom-up and top-down pathways. So scaling is [1,1,326,229,131,65,131] - too large so I'll use relative scale - based roughly on square root - [1,1,18,15,11,8,11]
+- For lateral connections, see Fig.6 of https://www.jneurosci.org/content/22/19/8633.long - visual field multiplication factor of around 2.5 found in V1, corresponding to a particular cortical distance. This implies the magnification factor reduces as we go to higher RF regions - I'll just use ks of 5 here (3 for 128px). Using depthwise separable convolutions to reduce #params (spread kernel and then mix channels)
+- For topdown connections, we will use the same kernel and stride info as bottom-up connections and then scale output during forward pass implicitly with transposed convolutions
+- For the prereadout layer, the BU output is num_classes+100 dims with conv layer kernel_size 5 (3 for 128px), then avgpool + slice classes -> losses, while the conv output (relued) goes back to LOC via transposed conv - this ensures we maintain spatial info for TD connections; we add features to maintain orientation, color, and other such info.
+- Skip connections info - only V4 receives skip connections from V1, and only V1 receives skip connections from V4; although all layers from V1 to V4 are connected with each other (https://academic.oup.com/cercor/article/1/1/1/408896?login=true), we only add these two long-range connection for simplicity here. They are also modeled as depthwise separable convolutions to save parameters. These connections ae additive to the bottom-up and top-down connections (https://www.jneurosci.org/content/13/9/3681.long).
+- Connections to and from the pulvinar are not included - they potentially become important for attention and other such tasks, but for now, we'll keep it simple.
+- The separate bottom-up and top-down streams, and multiplicative interactions (whoever is on distal dendrite is the multiplier), are inspired by cortical organisation, see Fig in Box 1 of https://www.nature.com/articles/nature12654. Lateral connections come and go in the same layers as BU and TD (https://www.jneurosci.org/content/3/5/1116.long) and they are additive as they latch onto proximal dendrites (https://onlinelibrary.wiley.com/doi/abs/10.1002/cne.903050303)
 
 ---------------------------------------------------
 
