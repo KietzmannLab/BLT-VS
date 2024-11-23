@@ -3,42 +3,44 @@ BLT-class recurrent neural network designed to resemble the ventral stream
 
 Info about design choices in BLT_VS:
 
-# Retina -> LGN -> V1 -> V2 -> V3 -> V4 -> IT -> Readout: kernel size and strides computed to match mean RF sizes for each ROI, assuming a 5deg image presentation for 224px images (additionally there's a provision for 128px in case you need a smaller network), channel size computed using #neurons comparison
+Retina -> LGN -> V1 -> V2 -> V3 -> V4 -> IT -> Readout: kernel size and strides computed to match mean RF sizes for each ROI, assuming a 5deg image presentation for 224px images (additionally there's a provision for 128px in case you need a smaller network), channel size computed using #neurons comparison
 
-# Avg. RF sizes (radii at 2.5deg): Retina: 0.18deg (Table 1, P-cells-surround https://www.sciencedirect.com/science/article/pii/0042698994E0066T), LGN: 0.4 (Fig.5 https://www.jneurosci.org/content/22/1/338.full), V1: 0.75, V2: 0.8, V3: 1.37, V4: 1.85, LOC: 2.48 (Fig. 4 https://www.jneurosci.org/content/jneuro/31/38/13604.full.pdf)
+Avg. RF sizes (radii at 2.5deg): Retina: 0.18deg (Table 1, P-cells-surround https://www.sciencedirect.com/science/article/pii/0042698994E0066T), LGN: 0.4 (Fig.5 https://www.jneurosci.org/content/22/1/338.full), V1: 0.75, V2: 0.8, V3: 1.37, V4: 1.85, LOC: 2.48 (Fig. 4 https://www.jneurosci.org/content/jneuro/31/38/13604.full.pdf)
 
-# Avg. #neurons: Retina: 300k, LGN: 450k, V1: 98M, V2: 68.6M, V3: 39.2M, V4: 19.6M, LOC: 39.2M (see txt below - extremely crude approximations using chatgpt-o1-preview). Now there's 4 kinds of pyramidal cells in cortical columns it seems (see Fig in Box 1 https://www.nature.com/articles/nature12654) so we divide the numbers by half as we only care about the bottom-up and top-down pathways. So scaling is [1,1,326,229,131,65,131] - too large so I'll use relative scale - based roughly on square root - [1,1,18,15,11,8,11]
+Avg. #neurons: Retina: 300k, LGN: 450k, V1: 98M, V2: 68.6M, V3: 39.2M, V4: 19.6M, LOC: 39.2M (see txt below - extremely crude approximations using chatgpt-o1-preview). Now there's 4 kinds of pyramidal cells in cortical columns it seems (see Fig in Box 1 https://www.nature.com/articles/nature12654) so we divide the numbers by half as we only care about the bottom-up and top-down pathways. So scaling is [1,1,326,229,131,65,131] - too large so I'll use relative scale - based roughly on square root - [1,1,18,15,11,8,11]
 
-# For lateral connections, see Fig.6 of https://www.jneurosci.org/content/22/19/8633.long - visual field multiplication factor of around 2.5 found in V1, corresponding to a particular cortical distance. This implies the magnification factor reduces as we go to higher RF regions - I'll just use ks of 5 here (3 for 128px). Using depthwise separable convolutions to reduce #params (spread kernel and then mix channels)
+For lateral connections, see Fig.6 of https://www.jneurosci.org/content/22/19/8633.long - visual field multiplication factor of around 2.5 found in V1, corresponding to a particular cortical distance. This implies the magnification factor reduces as we go to higher RF regions - I'll just use ks of 5 here (3 for 128px). Using depthwise separable convolutions to reduce #params (spread kernel and then mix channels)
 
-# For topdown connections, we will use the same kernel and stride info as bottom-up connections and then scale output during forward pass implicitly with transposed convolutions
+For topdown connections, we will use the same kernel and stride info as bottom-up connections and then scale output during forward pass implicitly with transposed convolutions
 
-# For the prereadout layer, the BU output is num_classes+100 dims with conv layer kernel_size 5 (3 for 128px), then avgpool + slice classes -> losses, while the conv output (relued) goes back to LOC via transposed conv - this ensures we maintain spatial info for TD connections; we add features to maintain orientation, color, and other such info.
+For the prereadout layer, the BU output is num_classes+100 dims with conv layer kernel_size 5 (3 for 128px), then avgpool + slice classes -> losses, while the conv output (relued) goes back to LOC via transposed conv - this ensures we maintain spatial info for TD connections; we add features to maintain orientation, color, and other such info.
 
-# Skip connections info - only V4 receives skip connections from V1, and only V1 receives skip connections from V4; although all layers from V1 to V4 are connected with each other (https://academic.oup.com/cercor/article/1/1/1/408896?login=true), we only add these two long-range connection for simplicity here. They are also modeled as depthwise separable convolutions to save parameters. These connections ae additive to the bottom-up and top-down connections (https://www.jneurosci.org/content/13/9/3681.long).
+Skip connections info - only V4 receives skip connections from V1, and only V1 receives skip connections from V4; although all layers from V1 to V4 are connected with each other (https://academic.oup.com/cercor/article/1/1/1/408896?login=true), we only add these two long-range connection for simplicity here. They are also modeled as depthwise separable convolutions to save parameters. These connections ae additive to the bottom-up and top-down connections (https://www.jneurosci.org/content/13/9/3681.long).
 
-# Connections to and from the pulvinar are not included - they potentially become important for attention and other such tasks, but for now, we'll keep it simple.
-# The separate bottom-up and top-down streams, and multiplicative interactions (whoever is on distal dendrite is the multiplier), are inspired by cortical organisation, see Fig in Box 1 of https://www.nature.com/articles/nature12654. Lateral connections come and go in the same layers as BU and TD (https://www.jneurosci.org/content/3/5/1116.long) and they are additive as they latch onto proximal dendrites (https://onlinelibrary.wiley.com/doi/abs/10.1002/cne.903050303)
+Connections to and from the pulvinar are not included - they potentially become important for attention and other such tasks, but for now, we'll keep it simple.
+The separate bottom-up and top-down streams, and multiplicative interactions (whoever is on distal dendrite is the multiplier), are inspired by cortical organisation, see Fig in Box 1 of https://www.nature.com/articles/nature12654. Lateral connections come and go in the same layers as BU and TD (https://www.jneurosci.org/content/3/5/1116.long) and they are additive as they latch onto proximal dendrites (https://onlinelibrary.wiley.com/doi/abs/10.1002/cne.903050303)
 
-# Eff RFs and area sizes (224px):
-# layer 0 - retina - RF size needed 8 - kernel size 7 - got RF 7 - stride 2 (eff stride 2, 112px)
-# layer 1 - LGN - RF size needed 18 - kernel size 7 - got RF 19 - stride 2 (eff stride 4, 56px)
-# layer 2 - V1 - RF size needed 34 - kernel size 5 - got RF 35 - stride 2 (eff stride 8, 28px)
-# layer 3 - V2  - RF size 36 - kernel size 1 - got RF 35 (eff stride 8, 28px)
-# layer 4 - V3 - RF size 61 - kernel size 5 - got RF 67 (eff stride 8, 28px)
-# layer 5 - V4 - RF size 83 - kernel size 3 - got RF 83 (eff stride 8, 28px)
-# layer 6 - LOC - RF size 93 - kernel size 3 - got RF 99 - stride 2 (eff stride 16, 14px)
-# layer 7 - Readout - kernel size 5 - got RF 163 - stride 2 (eff stride 32, 7px) - 163/224 is good enough for good object-scale readout!
+---------------------------------------------------
 
-# Eff RFs and area sizes (128px):
-# layer 0 - retina - RF size needed 5 - kernel size 5 - got RF 5 - stride 2 (eff stride 2, 64px)
-# layer 1 - LGN - RF size needed 10 - kernel size 3 - got RF 9 - stride 2 (eff stride 4, 32px)
-# layer 2 - V1 - RF size needed 19 - kernel size 3 - got RF 17 - stride 2 (eff stride 8, 16px)
-# layer 3 - V2  - RF size 20 - kernel size 1 - got RF 17 (eff stride 8, 16px)
-# layer 4 - V3 - RF size 35 - kernel size 3 - got RF 33 (eff stride 8, 16px)
-# layer 5 - V4 - RF size 47 - kernel size 3 - got RF 49 (eff stride 8, 16px)
-# layer 6 - LOC - RF size 63 - kernel size 3 - got RF 65 - stride 2 (eff stride 16, 8px)
-# layer 7 - Readout - kernel size 3 - got RF 97 - stride 2 (eff stride 32, 4px) - 97/128 is good enough for good object-scale readout!
+### Eff RFs and area sizes (224px):
+- layer 0 - retina - RF size needed 8 - kernel size 7 - got RF 7 - stride 2 (eff stride 2, 112px)
+- layer 1 - LGN - RF size needed 18 - kernel size 7 - got RF 19 - stride 2 (eff stride 4, 56px)
+- layer 2 - V1 - RF size needed 34 - kernel size 5 - got RF 35 - stride 2 (eff stride 8, 28px)
+- layer 3 - V2  - RF size 36 - kernel size 1 - got RF 35 (eff stride 8, 28px)
+- layer 4 - V3 - RF size 61 - kernel size 5 - got RF 67 (eff stride 8, 28px)
+- layer 5 - V4 - RF size 83 - kernel size 3 - got RF 83 (eff stride 8, 28px)
+- layer 6 - LOC - RF size 93 - kernel size 3 - got RF 99 - stride 2 (eff stride 16, 14px)
+- layer 7 - Readout - kernel size 5 - got RF 163 - stride 2 (eff stride 32, 7px) - 163/224 is good enough for good object-scale readout!
+
+### Eff RFs and area sizes (128px):
+- layer 0 - retina - RF size needed 5 - kernel size 5 - got RF 5 - stride 2 (eff stride 2, 64px)
+- layer 1 - LGN - RF size needed 10 - kernel size 3 - got RF 9 - stride 2 (eff stride 4, 32px)
+- layer 2 - V1 - RF size needed 19 - kernel size 3 - got RF 17 - stride 2 (eff stride 8, 16px)
+- layer 3 - V2  - RF size 20 - kernel size 1 - got RF 17 (eff stride 8, 16px)
+- layer 4 - V3 - RF size 35 - kernel size 3 - got RF 33 (eff stride 8, 16px)
+- layer 5 - V4 - RF size 47 - kernel size 3 - got RF 49 (eff stride 8, 16px)
+- layer 6 - LOC - RF size 63 - kernel size 3 - got RF 65 - stride 2 (eff stride 16, 8px)
+- layer 7 - Readout - kernel size 3 - got RF 97 - stride 2 (eff stride 32, 4px) - 97/128 is good enough for good object-scale readout!
 
 ---------------------------------------------------
 
@@ -131,26 +133,26 @@ Below is a summary of the estimated average number of pyramidal neurons (or equi
 	•	Malach, R., Reppas, J. B., Benson, R. R., et al. (1995). “Object-related activity revealed by functional magnetic resonance imaging in human occipital cortex.” Proceedings of the National Academy of Sciences, 92(18), 8135-8139.
 	•	Provides functional imaging evidence of LOC involvement in object perception.
 
-Note on Estimates:
+### Note on Estimates:
 
-	•	Estimation Basis:
-	•	The neuron counts are approximate and based on available data.
-	•	Pyramidal neurons are estimated to constitute about 70% of the total neuronal population in cortical areas.
-	•	Cortical Magnification:
-	•	The central 5 degrees of the visual field are overrepresented in the visual cortex to support high-acuity vision.
-	•	Variability:
-	•	Individual differences and methodological approaches may affect estimates.
-	•	Methodology:
-	•	Estimates combine data from histological studies, neuroimaging, and comparative anatomy.
+#### Estimation Basis:
+- The neuron counts are approximate and based on available data.
+- Pyramidal neurons are estimated to constitute about 70% of the total neuronal population in cortical areas.
+#### Cortical Magnification:
+- The central 5 degrees of the visual field are overrepresented in the visual cortex to support high-acuity vision.
+#### Variability:
+- Individual differences and methodological approaches may affect estimates.
+#### Methodology:
+- Estimates combine data from histological studies, neuroimaging, and comparative anatomy.
 
-Explanation of Neuron Count Adjustments:
+### Explanation of Neuron Count Adjustments:
 
-	•	Pyramidal Neurons in Cortex:
-	•	Only pyramidal neurons (principal excitatory neurons) are counted, excluding interneurons.
-	•	Relay Neurons in LGN:
-	•	Focus is on relay neurons (P and M cells) that carry visual information to the cortex.
-	•	Ganglion Cells in Retina:
-	•	Counting retinal ganglion cells (P and M cells), which are the output neurons of the retina transmitting visual signals to the brain.
+#### Pyramidal Neurons in Cortex:
+- Only pyramidal neurons (principal excitatory neurons) are counted, excluding interneurons.
+#### Relay Neurons in LGN:
+- Focus is on relay neurons (P and M cells) that carry visual information to the cortex.
+#### Ganglion Cells in Retina:
+- Counting retinal ganglion cells (P and M cells), which are the output neurons of the retina transmitting visual signals to the brain.
 
 Conclusion
 
