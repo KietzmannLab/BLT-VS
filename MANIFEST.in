@@ -1,0 +1,2 @@
+include blt_vs_model/imagenet.json
+include blt_vs_model/ecoset.json

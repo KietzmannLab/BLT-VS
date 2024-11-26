@@ -1,0 +1,11 @@
+# Core Dependencies
+torch>=2.0.0             # PyTorch for model implementation
+torchvision>=0.15.0      # TorchVision for transforms and datasets
+numpy>=1.21.0            # Numerical computations
+huggingface_hub>=0.15.1  # For downloading model weights
+Pillow>=9.0.0            # Image processing
+importlib_resources>=5.1.0; python_version<"3.9"  # Accessing package data files in Python < 3.9
+
+# Optional Dependencies for Examples and Testing
+requests>=2.25.0         # Downloading images from the web in examples
+matplotlib>=3.4.0        # Displaying images in examples
