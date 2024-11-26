@@ -6,7 +6,7 @@ import numpy as np
 
 class BLT_VS(nn.Module):
     """
-    BLT_VS model simulates the ventral stream of the visual cortex. See BLT_VS_info.txt for more details on motivation and design.
+    BLT_VS model simulates the ventral stream of the visual cortex. Copy of the main code kept here for consistency.
 
     Parameters:
     -----------
