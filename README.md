@@ -1,5 +1,5 @@
 # BLT-VS
-## BLT-class recurrent neural network designed to resemble the ventral stream. Critical addition to BLT: separation of the bottom-up and top-down information flows.
+## BLT-class recurrent neural network (see: https://github.com/KietzmannLab/BLT-pytorch-CCN23) designed to resemble the ventral stream. Critical addition to BLT: separation of the bottom-up and top-down information flows.
 
 ![Network architecture](network_diagram.png)
 
