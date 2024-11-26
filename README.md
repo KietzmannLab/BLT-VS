@@ -53,7 +53,7 @@ The training codes used to train these models can be found under [blt_vs_model/t
   ```bash
   python example.py
   ```
-  This should download an image of a baby turtle and classify it at the final timestep of the loaded BLT. You can change 'dataset' from 'imagenet' [expected output: 'terrapin'] to 'ecoset' [expected output: 'turtle'] to switch between the models.
+  This example code should download an image of a baby turtle and classify it at the final timestep of the loaded BLT. You can change 'dataset' from 'imagenet' [expected output: 'terrapin'] to 'ecoset' [expected output: 'turtle'] to switch between the models.
 
 ---
 
