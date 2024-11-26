@@ -1,11 +1,49 @@
-# BLT-VS
-## BLT-class recurrent neural network (see: https://github.com/KietzmannLab/BLT-pytorch-CCN23) designed to resemble the ventral stream. Critical addition to BLT: separation of the bottom-up and top-down information flows.
+# BLT_VS Model
+
+This repository contains the **BLT_VS** (Bottom-up Lateral Top-down - Ventral Stream) model, which simulates the ventral stream of the visual cortex, while taking the columnar organisation of bottom-up and top-down information flows, and the RF sizes and neuron counts across visual areas into account (5 DVA image presentation). The model is designed for image classification tasks and can be loaded with pre-trained weights. 
 
 ![Network architecture](network_diagram.png)
 
-#### You can access weights to the trained model "blt_vs_slt_111_biounroll_0_t_6_dataset_imagenet_num_1.pth" at https://zenodo.org/records/14223659
+More information about the architecture and the design choices can be found under [Network design][#network-design].
 
----------------------------------------------------
+---
+
+## Models shipped
+
+- **Imagenet - non_bio_unroll - 6** (default): This model outputs 1000-way class logits over 6 timesteps. 
+- **Ecoset - bio_unroll - 12**: This model output 565-way class logits over 8 timesteps where the information from input reaches readout.
+
+These models are available through HuggingFace - https://huggingface.co/novelmartis/blt_vs_model - and are pulled from there for evaluation. 
+
+---
+
+## Installation and Example evaluation
+
+1. **Create a new environment** named `blt_vs_env` and activate it:
+  ```bash
+  conda create --name blt_vs_env python=3.9
+  conda activate blt_vs_env
+  ```
+2. **Install the dependencies**:
+  ```bash
+  conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+  conda install numpy pillow
+  pip install huggingface_hub
+  ```
+3. **Clone and install the BLT_VS package**:
+  ```bash
+  git clone https://github.com/KietzmannLab/BLT-VS
+  cd BLT-VS
+  pip install -e .
+4. **Run example script**:
+  ```bash
+  python example.py
+  ```
+  This should download an image of a baby turtle and classify it at the final timestep of the BLT loaded. You can change 'dataset' from 'imagenet' to 'ecoset' to switch between the models.
+
+---
+
+## Network Design
 
 ### Info about design choices in BLT_VS:
 
@@ -155,6 +193,3 @@ Below is a summary of the estimated average number of pyramidal neurons (or equi
 #### Ganglion Cells in Retina:
 - Counting retinal ganglion cells (P and M cells), which are the output neurons of the retina transmitting visual signals to the brain.
 
-Conclusion
-
-This summary provides an overview of the estimated average number of pyramidal neurons (or equivalent projection neurons) dedicated to processing the central 5 degrees of the visual field in key regions of the human visual system. The included references offer detailed insights and are valuable resources for further exploration of the anatomy and function of these visual processing areas.
