@@ -19,6 +19,8 @@
 - Connections to and from the pulvinar are not included - they potentially become important for attention and other such tasks, but for now, we'll keep it simple.
 - The separate bottom-up and top-down streams, and multiplicative interactions (whoever is on distal dendrite is the multiplier), are inspired by cortical organisation, see Fig in Box 1 of https://www.nature.com/articles/nature12654. Lateral connections come and go in the same layers as BU and TD (https://www.jneurosci.org/content/3/5/1116.long) and they are additive as they latch onto proximal dendrites (https://onlinelibrary.wiley.com/doi/abs/10.1002/cne.903050303)
 
+For a recent similar 2-stream network check out - https://www.biorxiv.org/content/10.1101/2024.09.09.612033v2
+
 ---------------------------------------------------
 
 ### Eff RFs and area sizes (224px):
