@@ -1,6 +1,6 @@
-# 🍔 BLT_VS Model
+# 🍔 BLT-VS Model
 
-This repository contains the **BLT_VS** (Bottom-up Lateral Top-down - Ventral Stream) model, which simulates the ventral stream of the visual cortex, while taking into account the columnar organisation of bottom-up and top-down information flows, and the RF sizes and neuron counts across visual areas (5 DVA image presentation). The model is designed for image classification tasks and can be loaded with pre-trained weights. 
+This repository contains the **BLT-VS** (Bottom-up Lateral Top-down - Ventral Stream) model, which simulates the ventral stream of the visual cortex, while taking into account the columnar organisation of bottom-up and top-down information flows, and the RF sizes and neuron counts across visual areas (5 DVA image presentation). The model is designed for image classification tasks and can be loaded with pre-trained weights. 
 
 ![Network architecture](network_diagram.png)
 
