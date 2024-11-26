@@ -22,6 +22,10 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
 | ResNet-50         | Ecoset  | 73.1              | 4               |  24.6          |
 | CORNet-S        | Ecoset  | 70.6              | 16               | 53.1           |
 
+Increasing timesteps do offer classification benefits, increasing the accuracies by more than 15% in both models.
+
+![ecoset_imagenet_accs](ecoset_imagenet_accs.png)
+
 The training codes used to train these models can be found under [blt_vs_model/training_code](blt_vs_model/training_code). Models were trained until validation loss convergence.
 
 ---
