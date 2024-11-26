@@ -55,6 +55,8 @@ The training codes used to train these models can be found under [blt_vs_model/t
 
 ## Network Design
 
+BLT_VS is an extension of BLT models, which are discrete-time recurrent convolutional neural networks (DT-RCNN), dating back to [Spoerer, et al. 2017](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2017.01551/full). This 2-stream variant was inspired by the anatomical profile of the cortical columns. The effective receptive field sizes and channel counts were computed to roughly approximate the ventral stream profiles as explained below.
+
 ### Info about design choices in BLT_VS:
 
 - Retina -> LGN -> V1 -> V2 -> V3 -> V4 -> LOC -> Readout: kernel size and strides computed to match mean RF sizes for each ROI, assuming a 5deg image presentation for 224px images (additionally there's a provision for 128px in case you need a smaller network), channel size computed using #neurons comparison
