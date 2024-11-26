@@ -4,7 +4,7 @@ This repository contains the **BLT_VS** (Bottom-up Lateral Top-down - Ventral St
 
 ![Network architecture](network_diagram.png)
 
-More information about the architecture and the design choices can be found under [Network design](#network-design).
+More information about the architecture and the design choices can be found under [Network design](#network-design). The model definition can be found at [blt_vs_model/blt_vs.py](blt_vs_model/blt_vs.py)
 
 ---
 
@@ -22,7 +22,7 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
 | ResNet-50         | Ecoset  | 73.1              | 4               |  24.6          |
 | CORNet-S        | Ecoset  | 70.6              | 16               | 53.1           |
 
-The training codes used to train these models can be found under [blt_vs_model/training_code](blt_vs_model/training_code).
+The training codes used to train these models can be found under [blt_vs_model/training_code](blt_vs_model/training_code). Models were trained until validation loss convergence.
 
 ---
 
