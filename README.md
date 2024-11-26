@@ -22,7 +22,7 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
 | ResNet-50         | Ecoset  | 73.1              | 4               |  24.6          |
 | CORNet-S        | Ecoset  | 70.6              | 16               | 53.1           |
 
-The training codes used to train these models can be found under blt_vs_model/training_code.
+The training codes used to train these models can be found under [blt_vs_model/training_code](blt_vs_model/training_code).
 
 ---
 
