@@ -1,6 +1,8 @@
 # BLT-VS
 ## BLT-class recurrent neural network designed to resemble the ventral stream. Critical addition to BLT: separation of the bottom-up and top-down information flows.
 
+![Network architecture][network_diagram.png]
+
 #### You can access weights to the trained model "blt_vs_slt_111_biounroll_0_t_6_dataset_imagenet_num_1.pth" at https://zenodo.org/records/14223659
 
 ---------------------------------------------------
