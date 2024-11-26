@@ -13,6 +13,8 @@ setup(
         'huggingface_hub>=0.15.1',
         'Pillow>=9.0.0',
         'importlib_resources>=5.1.0; python_version<"3.9"',
+        'matplotlib>=3.4.0',
+        'requests>=2.25.0'
     ],
     package_data={
         'blt_vs_model': ['imagenet.json', 'ecoset.json'],
