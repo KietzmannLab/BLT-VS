@@ -41,7 +41,7 @@ The training codes used to train these models can be found under [blt_vs_model/t
   ```bash
   conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
   conda install numpy pillow
-  pip install huggingface_hub
+  pip install huggingface_hub matplotlib
   ```
 3. **Clone and install the BLT_VS package**:
   ```bash
