@@ -15,6 +15,13 @@ More information about the architecture and the design choices can be found unde
 
 These models are available through HuggingFace - https://huggingface.co/novelmartis/blt_vs_model - and are pulled from there for evaluation. 
 
+| Model Name       | Dataset   | Top-1 Accuracy (%) | FLOPs (Giga) | Parameters (M) |
+|------------------|-----------|--------------------|-------------------|----------------|
+| BLT_VS (ImageNet - non_bio_unroll) | ImageNet  | 70.4              | 158               | 34.9           |
+| BLT_VS (EcoSet - bio_unroll)   | Ecoset    | 70.7              | 115               | 27.3           |
+| ResNet-50         | Ecoset  | 73.1              | 4               |  24.6          |
+| CorNet-S        | Ecoset  | 70.6              | 16               | 53.1           |
+
 ---
 
 ## Installation and Example evaluation
@@ -40,7 +47,7 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
   ```bash
   python example.py
   ```
-  This should download an image of a baby turtle and classify it at the final timestep of the BLT loaded. You can change 'dataset' from 'imagenet' to 'ecoset' to switch between the models.
+  This should download an image of a baby turtle and classify it at the final timestep of the loaded BLT. You can change 'dataset' from 'imagenet' to 'ecoset' to switch between the models.
 
 ---
 
