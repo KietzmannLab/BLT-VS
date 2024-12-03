@@ -17,10 +17,9 @@ def main(dataset):
     # Get the required transforms
     transform = get_blt_vs_transform()
 
-    # Download an example image
-    image_url = 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Baby_turtle.jpg'  # Replace with a valid image URL
-    response = requests.get(image_url)
-    image = Image.open(BytesIO(response.content))
+    # Load a local image
+    image_path = 'turtle.jpg'  # Replace with your local image path
+    image = Image.open(image_path)
 
     # Display the image
     plt.imshow(image)
