@@ -48,9 +48,15 @@ import gc
 
 base_lr = args.learning_rate
 
-# as imagenet images are not square, here we first rescale smaller axis to 224 and then crop.
-augmenter_train = {'resize_224','crop_224','blurring','hflip','trivialaug','normalize'}
-augemnter_val_test = {'resize_224','centercrop_224','normalize'}
+if args.network == 'vNet': # vNet takes 128px images as inputs
+    print('Working with 128px inputs')
+    augmenter_train = {'resize_224','crop_224','resize_128','blurring','hflip','trivialaug','normalize'}
+    augemnter_val_test = {'resize_224','centercrop_224','resize_128','normalize'}
+else: 
+    # as imagenet images are not square, here we first rescale smaller axis to 224 and then crop.
+    print('Working with 224px inputs')
+    augmenter_train = {'resize_224','crop_224','blurring','hflip','trivialaug','normalize'}
+    augemnter_val_test = {'resize_224','centercrop_224','normalize'}
 
 hyp = {
     'dataset': {
@@ -132,7 +138,7 @@ if __name__ == '__main__':
 
     # Print the number of FLOPs for one pass
     if not args.network == 'blt_vnet':
-        print("\nFLOPs for one pass: {}\n".format(calculate_flops(net, torch.randn(1, 3, 224, 224))))
+        print("\nFLOPs for one pass: {}\n".format(calculate_flops(net, torch.randn(1, 3, 128, 128) if args.network == 'vNet' else torch.randn(1, 3, 224, 224))))
         net.train()
     print(net)
 
@@ -143,7 +149,7 @@ if __name__ == '__main__':
     net.to(hyp['optimizer']['device'])
 
     # criterion and optimizer setup
-    criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
+    criterion = nn.CrossEntropyLoss(weight=hyp['dataset']['class_weights'], label_smoothing=0.1)
     optimizer = get_optimizer(hyp,net)
     scaler = torch.cuda.amp.GradScaler(enabled=hyp['misc']['use_amp']) # this is in service of mixed precision training
 
@@ -205,6 +211,8 @@ if __name__ == '__main__':
 
             imgs = images.to(hyp['optimizer']['device'])
             lbls = labels.to(hyp['optimizer']['device'])
+            # Move weights to the same device as inputs
+            criterion.weight = criterion.weight.to(imgs.device)
 
             optimizer.zero_grad()
             
