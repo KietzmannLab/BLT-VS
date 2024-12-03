@@ -32,6 +32,12 @@ def get_network_model(hyp):
         from .B_net import B_VS
         net = B_VS(num_classes=num_classes)
         net_name = f'{network}_dataset_{dataset}_num_{netnum}'
+
+    if network == 'vNet':
+
+        from .vNet import vNet
+        net = vNet(num_classes=num_classes)
+        net_name = f'{network}_dataset_{dataset}_num_{netnum}'
     
     elif network == 'rn50':
 

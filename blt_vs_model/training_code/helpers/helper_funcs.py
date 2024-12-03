@@ -10,6 +10,7 @@ import os
 from sklearn.linear_model import LinearRegression
 import random
 from torchvision import datasets, transforms
+from collections import Counter
 
 ##############################
 ## Loading the dataset loaders
@@ -25,6 +26,7 @@ def get_Dataset_loaders(hyp, splits):
         dataset_path = hyp['dataset']['dataset_path'] + hyp['dataset']['name'] + '_square256_proper_chunks.h5'
         with h5py.File(dataset_path, "r") as f:
             hyp['dataset']['n_classes'] = np.max(f['val']['labels'][()]) + 1
+            hyp['dataset']['class_weights'] = calculate_class_weights_from_h5(f['train']['labels'][()])
 
         # import the transforms (augmentations)
         transform = get_transform(hyp['dataset']['augment'],hyp)
@@ -49,6 +51,7 @@ def get_Dataset_loaders(hyp, splits):
 
         if 'train' in splits:
             train_data = datasets.ImageFolder(root=dataset_path + '/train', transform=transform)
+            hyp['dataset']['class_weights'] = calculate_class_weights_from_imagefolder(train_data)
         if 'val' in splits:
             val_data = datasets.ImageFolder(root=dataset_path + '/val', transform=transform_val_test) 
         if 'test' in splits:
@@ -85,7 +88,7 @@ def get_Dataset_loaders(hyp, splits):
 class Ecoset(torch.utils.data.Dataset):
     #Import Ecoset as a Dataset splitwise
 
-    def __init__(self, split, dataset_path, in_memory=0, transform=None):
+    def __init__(self, split, dataset_path, in_memory=False, transform=None):
         """
         Args:
             dataset_path (string): Path to the .h5 file
@@ -98,35 +101,102 @@ class Ecoset(torch.utils.data.Dataset):
         self.split = split
         self.in_memory = in_memory
 
-        with h5py.File(dataset_path, "r") as f:
-            if in_memory==0:
-                self.n_imgs = len(f[split]['labels'])
-            else:
+        if self.in_memory:
+            with h5py.File(dataset_path, "r") as f:
                 self.images = torch.from_numpy(f[split]['data'][()]).permute((0, 3, 1, 2)) # to match the CHW expectation of pytorch
-                self.labels = torch.from_numpy(f[split]['labels'][()].astype(np.int32))
+                self.labels = torch.from_numpy(f[split]['labels'][()].astype(np.int64))
+        else:
+            self.split_data = h5py.File(dataset_path, "r")[split]
+            self.images = self.split_data['data']
+            self.labels = self.split_data['labels']
 
     def __len__(self):
-        if self.in_memory==0:
-            return self.n_imgs
-        else:
-            return len(self.labels)
+        return len(self.labels)
 
     def __getitem__(self, idx): # accepts ids and returns the images and labels transformed to the Dataloader
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        if self.in_memory==1:
+        if self.in_memory:
             imgs = self.images[idx]
             labels = self.labels[idx]
         else:
             with h5py.File(self.root_dir, "r") as f:
-                imgs = torch.from_numpy(f[self.split]['data'][idx][()]).permute((2, 0, 1)) # to match the CHW expectation of pytorch
-                labels = torch.from_numpy(np.array(f[self.split]['labels'][idx][()].astype(np.int32)))
+                imgs = torch.from_numpy(np.asarray(self.images[idx])).permute((2,0,1))    
+                labels = torch.from_numpy(np.asarray(self.labels[idx].astype(np.int64)))
 
         if self.transform:
             imgs = self.transform(imgs)
 
         return imgs, labels
+    
+def calculate_class_weights_from_h5(labels):
+    """
+    Calculate class weights for CrossEntropyLoss based on EcoSet labels
+    and print the min and max counts per class.
+
+    Args:
+        labels (numpy.ndarray): Array of labels for the EcoSet dataset.
+
+    Returns:
+        torch.Tensor: Tensor of class weights to use with CrossEntropyLoss.
+    """
+    # Count occurrences of each class
+    class_counts = Counter(labels)
+
+    # Get total number of samples
+    total_samples = len(labels)
+
+    # Calculate class weights: inverse proportional to class frequency
+    num_classes = len(class_counts)
+    class_weights = [total_samples / (num_classes * class_counts[i]) for i in range(num_classes)]
+
+    # Print min and max counts
+    min_count = min(class_counts.values())
+    max_count = max(class_counts.values())
+    print(f"Minimum count per class: {min_count}")
+    print(f"Maximum count per class: {max_count}")
+
+    # Normalize weights (optional)
+    class_weights = np.array(class_weights) / sum(class_weights)
+
+    # Convert to a tensor for use in PyTorch
+    return torch.tensor(class_weights, dtype=torch.float)
+
+def calculate_class_weights_from_imagefolder(dataset):
+    """
+    Calculate class weights for CrossEntropyLoss based on the dataset loaded with ImageFolder.
+
+    Args:
+        dataset (torchvision.datasets.ImageFolder): Dataset loaded using ImageFolder.
+
+    Returns:
+        torch.Tensor: Tensor of class weights to use with CrossEntropyLoss.
+    """
+    # Get the list of labels for all samples in the dataset
+    labels = [sample[1] for sample in dataset.samples]
+
+    # Count occurrences of each class
+    class_counts = Counter(labels)
+
+    # Get total number of samples
+    total_samples = sum(class_counts.values())
+
+    # Calculate class weights: inverse proportional to class frequency
+    num_classes = len(class_counts)
+    class_weights = [total_samples / (num_classes * class_counts[i]) for i in range(num_classes)]
+
+    # Print min and max counts
+    min_count = min(class_counts.values())
+    max_count = max(class_counts.values())
+    print(f"Minimum count per class: {min_count}")
+    print(f"Maximum count per class: {max_count}")
+
+    # Normalize weights (optional, depends on preference)
+    class_weights = np.array(class_weights) / sum(class_weights)
+
+    # Convert to a tensor for use in PyTorch
+    return torch.tensor(class_weights, dtype=torch.float)
     
 ##############################
 ## Transform functions
@@ -142,6 +212,8 @@ def get_transform(aug_str,hyp=None):
         transform_list.append(transforms.RandomCrop(224))
     if 'centercrop_224' in aug_str:
         transform_list.append(transforms.CenterCrop(224))
+    if 'resize_128' in aug_str:
+        transform_list.append(transforms.Resize(128, antialias=True))
     if 'blurring' in aug_str:
         max_kernel_size = 224//8 - 1
         transform_list.append(RandomGaussianBlur(p=0.5, kernel_size=(1,max_kernel_size), sigma=(0.1,max_kernel_size*1./2))) # apply random gaussian blur "p" of time

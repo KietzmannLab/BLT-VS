@@ -14,7 +14,7 @@ class B_VS(nn.Module):
         super(B_VS, self).__init__()
 
         # Retina -> LGN -> V1 -> V2 -> V3 -> V4 -> IT -> Readout: kernel size and strides computed to match mean RF sizes for each ROI, assuming a 5deg image presentation for 224px images (additionally there's a provision for 128px in case you need a smaller network), channel size computed using #neurons comparison
-        # Avg. RF sizes (radii): Retina: 0.18deg (Table 1, P-cells-surround https://www.sciencedirect.com/science/article/pii/0042698994E0066T), LGN: 0.4 (Fig.5 https://www.jneurosci.org/content/22/1/338.full), V1: 0.75, V2: 0.8, V3: 1.37, V4: 1.85, LOC: 2.48 (Fig. 4 https://www.jneurosci.org/content/jneuro/31/38/13604.full.pdf)
+        # Avg. RF sizes (radii at 2.5deg): Retina: 0.18deg (Table 1, P-cells-surround https://www.sciencedirect.com/science/article/pii/0042698994E0066T), LGN: 0.4 (Fig.5 https://www.jneurosci.org/content/22/1/338.full), V1: 0.75, V2: 0.8, V3: 1.37, V4: 1.85, LOC: 2.48 (Fig. 4 https://www.jneurosci.org/content/jneuro/31/38/13604.full.pdf)
         # Avg. #neurons: Retina: 300k, LGN: 450k, V1: 98M, V2: 68.6M, V3: 39.2M, V4: 19.6M, LOC: 39.2M (see txt in folder - extremely crude approximations using chatgpt-o1-preview). Now there's 4 kinds of pyramidal cells in cortical columns it seems (see Fig in Box 1 https://www.nature.com/articles/nature12654) so we divide the numbers by half as we only care about the bottom-up and top-down pathways. So scaling is [1,1,326,229,131,65,131] - too large so I'll use relative scale - based roughly on square root - [1,1,18,15,11,8,11]
 
         # Eff RFs and area sizes (224px):
