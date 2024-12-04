@@ -15,12 +15,14 @@ More information about the architecture and the design choices can be found unde
 
 These models are available through HuggingFace - https://huggingface.co/novelmartis/blt_vs_model - and are pulled from there for evaluation. These models have classification accuracies comparable to ResNet-50 and [CORNet-S](https://github.com/dicarlolab/CORnet) trained on the same data. 
 
-| Model Name       | Dataset   | Top-1 Accuracy (%) | FLOPs (Giga) | Parameters (M) |
-|------------------|-----------|--------------------|-------------------|----------------|
-| BLT_VS (ImageNet - non_bio_unroll) | ImageNet  | 70.2              | 158               | 34.9           |
-| BLT_VS (EcoSet - bio_unroll)   | Ecoset    | 69.8              | 115               | 27.3           |
-| ResNet-50         | Ecoset  | 74.1              | 4               |  24.6          |
-| CORNet-S        | Ecoset  | 71.3              | 16               | 53.1           |
+| Model Name       | Dataset   | Top-1 Accuracy (%) | FLOPs (Giga) | Parameters (M) | BrainScore (rank; 04/11/24) |
+|------------------|-----------|--------------------|-------------------|----------------|------------|
+| BLT_VS (ImageNet - non_bio_unroll) | ImageNet  | 70.2              | 158               | 34.9           | - |
+| BLT_VS (EcoSet - bio_unroll)   | Ecoset    | -              | 115               | 27.3           | - |
+| ResNet-50         | Ecoset  | 74.1              | 4               |  24.6          | - |
+| ResNet-50 (original)         | ImageNet  |       80.8        |     4          |    24.6      | 0.198 (#73) |
+| CORNet-S        | Ecoset  | 71.3              | 16               | 53.1           | - |
+| CORNet-S (original) | ImageNet | 73.1        | 16 | 53.1 | 0.189 (#107) |
 
 Increasing timesteps do offer classification benefits, increasing the accuracies by more than 15% in both models.
 
@@ -53,7 +55,7 @@ The training codes used to train these models can be found under [blt_vs_model/t
   ```bash
   python example.py --training_dataset='imagenet'
   ```
-  This example code should display an image of a baby turtle and classify it at the final timestep of the loaded BLT. You can change 'training_dataset' from 'imagenet' [expected output: 'terrapin'] to 'ecoset' [expected output: 'turtle'] to switch between the models.
+  This example code should download an image of a baby turtle and classify it at the final timestep of the loaded BLT. You can change 'training_dataset' from 'imagenet' [expected output: 'terrapin'] to 'ecoset' [expected output: 'turtle'] to switch between the models.
 
 ---
 
