@@ -17,12 +17,12 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
 
 | Model Name       | Dataset   | Top-1 Accuracy (%) | FLOPs (Giga) | Parameters (M) | BrainScore (rank; 04/11/24) |
 |------------------|-----------|--------------------|-------------------|----------------|------------|
-| BLT_VS (ImageNet - non_bio_unroll) | ImageNet  | 70.2              | 158               | 34.9           | 0.310 (#43) |
-| BLT_VS (EcoSet - bio_unroll)   | Ecoset    | -              | 115               | 27.3           | - |
+| BLT_VS (Imagenet - non_bio_unroll) | Imagenet  | 70.2              | 158               | 34.9           | 0.310 (#43) |
+| BLT_VS (Ecoset - bio_unroll)   | Ecoset    | -              | 115               | 27.3           | - |
 | ResNet-50         | Ecoset  | 74.1              | 4               |  24.6          | - |
-| ResNet-50 (original, v2)         | ImageNet  |       80.8        |     4          |    24.6      | 0.198 (#73) |
+| ResNet-50 (original, v2)         | Imagenet  |       80.8        |     4          |    24.6      | 0.198 (#73) |
 | CORNet-S        | Ecoset  | 71.3              | 16               | 53.1           | - |
-| CORNet-S (original) | ImageNet | 73.1        | 16 | 53.1 | 0.189 (#107) |
+| CORNet-S (original) | Imagenet | 73.1        | 16 | 53.1 | 0.189 (#107) |
 
 Increasing timesteps do offer classification benefits, increasing the accuracies by more than 15% in both models.
 
