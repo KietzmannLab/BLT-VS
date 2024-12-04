@@ -17,7 +17,7 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
 
 | Model Name       | Dataset   | Top-1 Accuracy (%) | FLOPs (Giga) | Parameters (M) | BrainScore (rank; 04/11/24) |
 |------------------|-----------|--------------------|-------------------|----------------|------------|
-| BLT_VS (ImageNet - non_bio_unroll) | ImageNet  | 70.2              | 158               | 34.9           | - |
+| BLT_VS (ImageNet - non_bio_unroll) | ImageNet  | 70.2              | 158               | 34.9           | 0.310 (#43) |
 | BLT_VS (EcoSet - bio_unroll)   | Ecoset    | -              | 115               | 27.3           | - |
 | ResNet-50         | Ecoset  | 74.1              | 4               |  24.6          | - |
 | ResNet-50 (original, v2)         | ImageNet  |       80.8        |     4          |    24.6      | 0.198 (#73) |
