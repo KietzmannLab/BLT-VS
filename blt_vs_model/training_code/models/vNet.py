@@ -12,6 +12,7 @@ class vNet(nn.Module):
     def __init__(self, num_classes=565):
 
         # for info on this model, see https://www.pnas.org/doi/10.1073/pnas.2011417118#sec-3 ; also check - https://codeocean.com/capsule/9570390/tree/v1
+        # Made for 128px inputs!
 
         super(vNet, self).__init__()
 
