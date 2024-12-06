@@ -1,0 +1,142 @@
+Starting the script.
+running in shell:  /bin/sh
+Working with 224px inputs
+
+Aaaand it begins...
+
+Getting Ecoset ready!
+Minimum count per class: 601
+Maximum count per class: 4900
+/share/klab/datasets/ecoset_square256_proper_chunks.h5
+Number of classes: 565
+
+Network name: b_vs_dataset_ecoset_num_1
+
+The network has 11618111 trainable parameters
+
+Accessing log folders...
+Log_folders: logs/perf_logs/b_vs_dataset_ecoset_num_1 -- logs/net_params/b_vs_dataset_ecoset_num_1
+Loading epoch: 93
+
+FLOPs for one pass: 5.144e+09
+
+B_VS(
+  (connections): ModuleDict(
+    (Retina): Conv2d(3, 32, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3))
+    (LGN): Conv2d(32, 32, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3))
+    (V1): Conv2d(32, 576, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
+    (V2): Conv2d(576, 480, kernel_size=(1, 1), stride=(1, 1))
+    (V3): Conv2d(480, 352, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (V4): Conv2d(352, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (LOC): Conv2d(256, 352, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (Readout): Conv2d(352, 565, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
+  )
+  (layernorms): ModuleDict(
+    (norm_Retina): GroupNorm(1, 32, eps=1e-05, affine=True)
+    (norm_LGN): GroupNorm(1, 32, eps=1e-05, affine=True)
+    (norm_V1): GroupNorm(1, 576, eps=1e-05, affine=True)
+    (norm_V2): GroupNorm(1, 480, eps=1e-05, affine=True)
+    (norm_V3): GroupNorm(1, 352, eps=1e-05, affine=True)
+    (norm_V4): GroupNorm(1, 256, eps=1e-05, affine=True)
+    (norm_LOC): GroupNorm(1, 352, eps=1e-05, affine=True)
+    (norm_Readout): GroupNorm(1, 565, eps=1e-05, affine=True)
+  )
+  (global_avg_pool): AdaptiveAvgPool2d(output_size=(1, 1))
+)
+
+Training begins here!
+
+Epoch: 94
+LR now:  1.3020833333333333e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 23.6640625 Gb; 1 GPU(s)
+Epoch time:  1715.15  seconds
+Train loss: 2.65; acc: 63.31%
+Val loss: 2.59; acc: 62.94%; acc_t: [62.93653028]
+Saving metrics!
+Saving network!
+
+Epoch: 95
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 23.6640625 Gb; 1 GPU(s)
+Epoch time:  1307.10  seconds
+Train loss: 2.65; acc: 63.30%
+Val loss: 2.59; acc: 62.96%; acc_t: [62.96468343]
+Saving metrics!
+Saving network!
+
+Epoch: 96
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 23.6640625 Gb; 1 GPU(s)
+Epoch time:  1223.63  seconds
+Train loss: 2.65; acc: 63.25%
+Val loss: 2.59; acc: 62.96%; acc_t: [62.96468343]
+Saving metrics!
+Saving network!
+
+Epoch: 97
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 23.6640625 Gb; 1 GPU(s)
+Epoch time:  1076.27  seconds
+Train loss: 2.65; acc: 63.33%
+Val loss: 2.59; acc: 62.98%; acc_t: [62.97524087]
+Saving metrics!
+Saving network!
+
+Epoch: 98
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 23.6640625 Gb; 1 GPU(s)
+Epoch time:  1060.05  seconds
+Train loss: 2.65; acc: 63.31%
+Val loss: 2.59; acc: 62.97%; acc_t: [62.96820258]
+Saving metrics!
+Saving network!
+
+Epoch: 99
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 23.6640625 Gb; 1 GPU(s)
+Epoch time:  1065.99  seconds
+Train loss: 2.65; acc: 63.26%
+Val loss: 2.59; acc: 62.94%; acc_t: [62.94004942]
+Percent_change in metric: 0.02%
+Saving metrics!
+Saving network!
+
+Epoch: 100
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 23.6640625 Gb; 1 GPU(s)
+Epoch time:  1071.50  seconds
+Train loss: 2.65; acc: 63.32%
+Val loss: 2.59; acc: 62.97%; acc_t: [62.96875]
+Percent_change in metric: 0.00%
+Saving metrics!
+Saving network!
+
+Epoch: 101
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 23.6640625 Gb; 1 GPU(s)
+Epoch time:  1074.14  seconds
+Train loss: 2.65; acc: 63.28%
+Val loss: 2.59; acc: 62.95%; acc_t: [62.954126]
+Percent_change in metric: 0.01%
+Reducing learning rate of group 0 to 9.7656e-07. Percent change: 0.01%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+
+ Done training! - LR reached 1e-6 i.e. converged
+
+Getting Ecoset ready!
+Minimum count per class: 601
+Maximum count per class: 4900
+/share/klab/datasets/ecoset_square256_proper_chunks.h5
+Number of classes: 565
+Test accuracies over time (%): [63.10623123]
+Saving metrics!

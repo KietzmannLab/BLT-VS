@@ -1,0 +1,374 @@
+Starting the script.
+running in shell:  /bin/sh
+Working with 224px inputs
+
+Aaaand it begins...
+
+Getting Imagenet ready!
+Minimum count per class: 732
+Maximum count per class: 1300
+/share/klab/datasets/imagenet
+Number of classes: 1000
+
+Network name: blt_vs_slt_111_biounroll_0_t_6_readout_multi_dataset_imagenet_num_1
+
+The network has 34989732 trainable parameters
+
+Accessing log folders...
+Log_folders: logs/perf_logs/blt_vs_slt_111_biounroll_0_t_6_readout_multi_dataset_imagenet_num_1 -- logs/net_params/blt_vs_slt_111_biounroll_0_t_6_readout_multi_dataset_imagenet_num_1
+Loading epoch: 72
+
+FLOPs for one pass: 1.582e+11
+
+BLT_VS(
+  (connections): ModuleDict(
+    (Retina): BLT_VS_Layer(
+      (bu_conv): Conv2d(3, 32, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3))
+      (bu_l_conv_depthwise): NoOpModule()
+      (bu_l_conv_pointwise): NoOpModule()
+      (td_conv): NoOpModule()
+      (td_l_conv_depthwise): NoOpModule()
+      (td_l_conv_pointwise): NoOpModule()
+      (skip_bu_depthwise): NoOpModule()
+      (skip_bu_pointwise): NoOpModule()
+      (skip_td_depthwise): NoOpModule()
+      (skip_td_pointwise): NoOpModule()
+      (layer_norm_bu): GroupNorm(1, 32, eps=1e-05, affine=True)
+      (layer_norm_td): GroupNorm(1, 32, eps=1e-05, affine=True)
+    )
+    (LGN): BLT_VS_Layer(
+      (bu_conv): Conv2d(32, 32, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3))
+      (bu_l_conv_depthwise): NoOpModule()
+      (bu_l_conv_pointwise): NoOpModule()
+      (td_conv): ConvTranspose2d(576, 32, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
+      (td_l_conv_depthwise): NoOpModule()
+      (td_l_conv_pointwise): NoOpModule()
+      (skip_bu_depthwise): NoOpModule()
+      (skip_bu_pointwise): NoOpModule()
+      (skip_td_depthwise): NoOpModule()
+      (skip_td_pointwise): NoOpModule()
+      (layer_norm_bu): GroupNorm(1, 32, eps=1e-05, affine=True)
+      (layer_norm_td): GroupNorm(1, 32, eps=1e-05, affine=True)
+    )
+    (V1): BLT_VS_Layer(
+      (bu_conv): Conv2d(32, 576, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
+      (bu_l_conv_depthwise): Conv2d(576, 576, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=576)
+      (bu_l_conv_pointwise): Conv2d(576, 576, kernel_size=(1, 1), stride=(1, 1))
+      (td_conv): ConvTranspose2d(480, 576, kernel_size=(1, 1), stride=(1, 1))
+      (td_l_conv_depthwise): Conv2d(576, 576, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=576)
+      (td_l_conv_pointwise): Conv2d(576, 576, kernel_size=(1, 1), stride=(1, 1))
+      (skip_bu_depthwise): NoOpModule()
+      (skip_bu_pointwise): NoOpModule()
+      (skip_td_depthwise): Conv2d(256, 576, kernel_size=(3, 3), stride=(1, 1), padding=same, groups=64)
+      (skip_td_pointwise): Conv2d(576, 576, kernel_size=(1, 1), stride=(1, 1))
+      (layer_norm_bu): GroupNorm(1, 576, eps=1e-05, affine=True)
+      (layer_norm_td): GroupNorm(1, 576, eps=1e-05, affine=True)
+    )
+    (V2): BLT_VS_Layer(
+      (bu_conv): Conv2d(576, 480, kernel_size=(1, 1), stride=(1, 1))
+      (bu_l_conv_depthwise): Conv2d(480, 480, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=480)
+      (bu_l_conv_pointwise): Conv2d(480, 480, kernel_size=(1, 1), stride=(1, 1))
+      (td_conv): ConvTranspose2d(352, 480, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+      (td_l_conv_depthwise): Conv2d(480, 480, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=480)
+      (td_l_conv_pointwise): Conv2d(480, 480, kernel_size=(1, 1), stride=(1, 1))
+      (skip_bu_depthwise): NoOpModule()
+      (skip_bu_pointwise): NoOpModule()
+      (skip_td_depthwise): NoOpModule()
+      (skip_td_pointwise): NoOpModule()
+      (layer_norm_bu): GroupNorm(1, 480, eps=1e-05, affine=True)
+      (layer_norm_td): GroupNorm(1, 480, eps=1e-05, affine=True)
+    )
+    (V3): BLT_VS_Layer(
+      (bu_conv): Conv2d(480, 352, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+      (bu_l_conv_depthwise): Conv2d(352, 352, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=352)
+      (bu_l_conv_pointwise): Conv2d(352, 352, kernel_size=(1, 1), stride=(1, 1))
+      (td_conv): ConvTranspose2d(256, 352, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (td_l_conv_depthwise): Conv2d(352, 352, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=352)
+      (td_l_conv_pointwise): Conv2d(352, 352, kernel_size=(1, 1), stride=(1, 1))
+      (skip_bu_depthwise): NoOpModule()
+      (skip_bu_pointwise): NoOpModule()
+      (skip_td_depthwise): NoOpModule()
+      (skip_td_pointwise): NoOpModule()
+      (layer_norm_bu): GroupNorm(1, 352, eps=1e-05, affine=True)
+      (layer_norm_td): GroupNorm(1, 352, eps=1e-05, affine=True)
+    )
+    (V4): BLT_VS_Layer(
+      (bu_conv): Conv2d(352, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (bu_l_conv_depthwise): Conv2d(256, 256, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=256)
+      (bu_l_conv_pointwise): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+      (td_conv): ConvTranspose2d(352, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+      (td_l_conv_depthwise): Conv2d(256, 256, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=256)
+      (td_l_conv_pointwise): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+      (skip_bu_depthwise): Conv2d(576, 256, kernel_size=(7, 7), stride=(1, 1), padding=same, groups=64)
+      (skip_bu_pointwise): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+      (skip_td_depthwise): NoOpModule()
+      (skip_td_pointwise): NoOpModule()
+      (layer_norm_bu): GroupNorm(1, 256, eps=1e-05, affine=True)
+      (layer_norm_td): GroupNorm(1, 256, eps=1e-05, affine=True)
+    )
+    (LOC): BLT_VS_Layer(
+      (bu_conv): Conv2d(256, 352, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+      (bu_l_conv_depthwise): Conv2d(352, 352, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=352)
+      (bu_l_conv_pointwise): Conv2d(352, 352, kernel_size=(1, 1), stride=(1, 1))
+      (td_conv): ConvTranspose2d(1100, 352, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
+      (td_l_conv_depthwise): Conv2d(352, 352, kernel_size=(5, 5), stride=(1, 1), padding=same, groups=352)
+      (td_l_conv_pointwise): Conv2d(352, 352, kernel_size=(1, 1), stride=(1, 1))
+      (skip_bu_depthwise): NoOpModule()
+      (skip_bu_pointwise): NoOpModule()
+      (skip_td_depthwise): NoOpModule()
+      (skip_td_pointwise): NoOpModule()
+      (layer_norm_bu): GroupNorm(1, 352, eps=1e-05, affine=True)
+      (layer_norm_td): GroupNorm(1, 352, eps=1e-05, affine=True)
+    )
+    (Readout): BLT_VS_Readout(
+      (readout_conv): Conv2d(352, 1100, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
+      (global_avg_pool): AdaptiveAvgPool2d(output_size=(1, 1))
+      (layer_norm_td): GroupNorm(1, 1100, eps=1e-05, affine=True)
+    )
+  )
+)
+
+Let's use 2 GPUs!
+
+Training begins here!
+
+Epoch: 73
+LR now:  5.208333333333333e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.373046875 Gb; 2 GPU(s)
+Epoch time:  3151.84  seconds
+Train loss: 2.25; acc: 69.74%
+Val loss: 2.37; acc: 66.25%; acc_t: [52.62356505 65.36670918 69.02702487 70.04344707 70.31369579 70.1303412 ]
+Saving metrics!
+Saving network!
+
+Epoch: 74
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3144.34  seconds
+Train loss: 2.25; acc: 69.76%
+Val loss: 2.37; acc: 66.25%; acc_t: [52.63153699 65.3643176  69.01865434 70.08051658 70.27622768 70.15027105]
+Saving metrics!
+Saving network!
+
+Epoch: 75
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3147.36  seconds
+Train loss: 2.25; acc: 69.69%
+Val loss: 2.37; acc: 66.26%; acc_t: [52.63950893 65.4169324  69.05891263 70.0526148  70.27981505 70.10801977]
+Saving metrics!
+Saving network!
+
+Epoch: 76
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3143.64  seconds
+Train loss: 2.24; acc: 69.74%
+Val loss: 2.37; acc: 66.24%; acc_t: [52.66541773 65.44164541 68.96524235 70.08330676 70.24633291 70.05460778]
+Saving metrics!
+Saving network!
+
+Epoch: 77
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3141.13  seconds
+Train loss: 2.24; acc: 69.73%
+Val loss: 2.37; acc: 66.28%; acc_t: [52.68534758 65.40178571 69.06050702 70.11080995 70.30173788 70.10961416]
+Saving metrics!
+Saving network!
+
+Epoch: 78
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3142.36  seconds
+Train loss: 2.24; acc: 69.76%
+Val loss: 2.37; acc: 66.28%; acc_t: [52.69331952 65.44921875 69.02264031 70.0908801  70.36949936 70.07413903]
+Percent_change in metric: 0.01%
+Saving metrics!
+Saving network!
+
+Epoch: 79
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3142.86  seconds
+Train loss: 2.24; acc: 69.77%
+Val loss: 2.37; acc: 66.29%; acc_t: [52.68136161 65.47712054 69.05652105 70.12715242 70.26387117 70.11798469]
+Percent_change in metric: -0.03%
+Saving metrics!
+Saving network!
+
+Epoch: 80
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3141.86  seconds
+Train loss: 2.24; acc: 69.75%
+Val loss: 2.37; acc: 66.27%; acc_t: [52.68335459 65.38544324 69.06887755 70.06696429 70.29615753 70.09406888]
+Percent_change in metric: -0.06%
+Reducing learning rate of group 0 to 3.9063e-06. Percent change: -0.06%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 81
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3143.62  seconds
+Train loss: 2.24; acc: 69.79%
+Val loss: 2.37; acc: 66.26%; acc_t: [52.65744579 65.38105867 69.09398916 70.05899235 70.27622768 70.11001276]
+Saving metrics!
+Saving network!
+
+Epoch: 82
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3142.67  seconds
+Train loss: 2.24; acc: 69.79%
+Val loss: 2.37; acc: 66.26%; acc_t: [52.70727041 65.33920599 69.05253508 70.08689413 70.30014349 70.07573342]
+Saving metrics!
+Saving network!
+
+Epoch: 83
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3143.15  seconds
+Train loss: 2.24; acc: 69.78%
+Val loss: 2.37; acc: 66.27%; acc_t: [52.73317921 65.38903061 69.03260523 70.03268495 70.34598214 70.07374043]
+Saving metrics!
+Saving network!
+
+Epoch: 84
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3138.35  seconds
+Train loss: 2.24; acc: 69.79%
+Val loss: 2.37; acc: 66.25%; acc_t: [52.69132653 65.37348533 69.02224171 70.0912787  70.2598852  70.07613202]
+Saving metrics!
+Saving network!
+
+Epoch: 85
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3130.09  seconds
+Train loss: 2.24; acc: 69.78%
+Val loss: 2.37; acc: 66.26%; acc_t: [52.70129145 65.38105867 69.05213648 70.07134885 70.28419962 70.09805485]
+Percent_change in metric: -0.01%
+Saving metrics!
+Saving network!
+
+Epoch: 86
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3131.15  seconds
+Train loss: 2.24; acc: 69.84%
+Val loss: 2.37; acc: 66.28%; acc_t: [52.71324936 65.40497449 69.07844388 70.0908801  70.30173788 70.08370536]
+Percent_change in metric: 0.00%
+Saving metrics!
+Saving network!
+
+Epoch: 87
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3131.95  seconds
+Train loss: 2.24; acc: 69.86%
+Val loss: 2.37; acc: 66.28%; acc_t: [52.66541773 65.42889031 69.08641582 70.11280293 70.28180804 70.10164222]
+Percent_change in metric: -0.01%
+Reducing learning rate of group 0 to 1.9531e-06. Percent change: -0.01%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 88
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3131.72  seconds
+Train loss: 2.24; acc: 69.83%
+Val loss: 2.37; acc: 66.29%; acc_t: [52.69331952 65.44882015 69.09239477 70.10483099 70.30572385 70.10164222]
+Saving metrics!
+Saving network!
+
+Epoch: 89
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3133.59  seconds
+Train loss: 2.24; acc: 69.83%
+Val loss: 2.37; acc: 66.29%; acc_t: [52.69730548 65.46516263 69.08242985 70.10283801 70.28977997 70.11599171]
+Saving metrics!
+Saving network!
+
+Epoch: 90
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3130.57  seconds
+Train loss: 2.24; acc: 69.85%
+Val loss: 2.37; acc: 66.29%; acc_t: [52.6953125  65.46277105 69.04057717 70.10682398 70.31768176 70.10801977]
+Saving metrics!
+Saving network!
+
+Epoch: 91
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3130.87  seconds
+Train loss: 2.24; acc: 69.83%
+Val loss: 2.37; acc: 66.28%; acc_t: [52.6953125  65.43287628 69.06847895 70.09685906 70.30373087 70.0777264 ]
+Saving metrics!
+Saving network!
+
+Epoch: 92
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3135.53  seconds
+Train loss: 2.24; acc: 69.81%
+Val loss: 2.37; acc: 66.26%; acc_t: [52.70527742 65.46077806 69.02861926 70.06297832 70.27622768 70.03388074]
+Percent_change in metric: -0.01%
+Saving metrics!
+Saving network!
+
+Epoch: 93
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3148.41  seconds
+Train loss: 2.24; acc: 69.82%
+Val loss: 2.37; acc: 66.29%; acc_t: [52.7730389  65.44682717 69.03858418 70.08091518 70.30173788 70.0777264 ]
+Percent_change in metric: -0.01%
+Saving metrics!
+Saving network!
+
+Epoch: 94
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 139.376953125 Gb; 2 GPU(s)
+Epoch time:  3144.53  seconds
+Train loss: 2.24; acc: 69.86%
+Val loss: 2.37; acc: 66.29%; acc_t: [52.76506696 65.44882015 69.05452806 70.09685906 70.29416454 70.0777264 ]
+Percent_change in metric: -0.02%
+Reducing learning rate of group 0 to 9.7656e-07. Percent change: -0.02%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+
+ Done training! - LR reached 1e-6 i.e. converged
+
+Getting Imagenet ready!
+/share/klab/datasets/imagenet
+Number of classes: 1000
+Test accuracies over time (%): [52.76506696 65.44882015 69.05452806 70.09685906 70.29416454 70.0777264 ]
+Saving metrics!

@@ -1,0 +1,1128 @@
+Starting the script.
+running in shell:  /bin/sh
+Working with 224px inputs
+
+Aaaand it begins...
+
+Getting Ecoset ready!
+Minimum count per class: 601
+Maximum count per class: 4900
+/share/klab/datasets/ecoset_square256_proper_chunks.h5
+Number of classes: 565
+
+Network name: rn50_dataset_ecoset_num_1
+
+The network has 24665717 trainable parameters
+
+Accessing log folders...
+Log_folders: logs/perf_logs/rn50_dataset_ecoset_num_1 -- logs/net_params/rn50_dataset_ecoset_num_1
+
+FLOPs for one pass: 4.133e+09
+
+ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential(
+        (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+  )
+  (layer2): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+    (3): Bottleneck(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+  )
+  (layer3): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential(
+        (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+    (3): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+    (4): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+    (5): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+  )
+  (layer4): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential(
+        (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (shortcut): Sequential()
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=2048, out_features=565, bias=True)
+)
+
+Training begins here!
+
+Epoch: 1
+LR now:  1e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1451.37  seconds
+Train loss: 6.00; acc: 3.24%
+Val loss: 5.19; acc: 8.80%; acc_t: [8.80270896]
+Saving metrics!
+Saving network!
+
+Epoch: 2
+LR now:  0.0002575
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1443.09  seconds
+Train loss: 5.01; acc: 15.05%
+Val loss: 3.89; acc: 30.45%; acc_t: [30.45303116]
+Saving metrics!
+Saving network!
+
+Epoch: 3
+LR now:  0.000505
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1443.56  seconds
+Train loss: 4.17; acc: 29.49%
+Val loss: 3.34; acc: 41.95%; acc_t: [41.9530468]
+Saving metrics!
+Saving network!
+
+Epoch: 4
+LR now:  0.0007525
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1447.02  seconds
+Train loss: 3.76; acc: 38.05%
+Val loss: 3.06; acc: 49.10%; acc_t: [49.10066316]
+Saving metrics!
+Saving network!
+
+Epoch: 5
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1448.00  seconds
+Train loss: 3.49; acc: 43.99%
+Val loss: 2.89; acc: 53.15%; acc_t: [53.15198011]
+Saving metrics!
+Saving network!
+
+Epoch: 6
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1445.38  seconds
+Train loss: 3.24; acc: 49.55%
+Val loss: 2.68; acc: 58.23%; acc_t: [58.23385886]
+Saving metrics!
+Saving network!
+
+Epoch: 7
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1443.29  seconds
+Train loss: 3.08; acc: 53.40%
+Val loss: 2.61; acc: 60.09%; acc_t: [60.08766579]
+Saving metrics!
+Saving network!
+
+Epoch: 8
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1587.48  seconds
+Train loss: 2.95; acc: 56.30%
+Val loss: 2.53; acc: 62.37%; acc_t: [62.36721096]
+Saving metrics!
+Saving network!
+
+Epoch: 9
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1463.01  seconds
+Train loss: 2.85; acc: 58.56%
+Val loss: 2.43; acc: 65.01%; acc_t: [65.00766391]
+Percent_change in metric: -15.05%
+Saving metrics!
+Saving network!
+
+Epoch: 10
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.94  seconds
+Train loss: 2.77; acc: 60.41%
+Val loss: 2.42; acc: 65.25%; acc_t: [65.25236174]
+Percent_change in metric: -10.48%
+Saving metrics!
+Saving network!
+
+Epoch: 11
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.53  seconds
+Train loss: 2.71; acc: 61.99%
+Val loss: 2.35; acc: 67.08%; acc_t: [67.08419357]
+Percent_change in metric: -9.56%
+Saving metrics!
+Saving network!
+
+Epoch: 12
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1468.15  seconds
+Train loss: 2.65; acc: 63.33%
+Val loss: 2.32; acc: 68.01%; acc_t: [68.00863363]
+Percent_change in metric: -7.99%
+Saving metrics!
+Saving network!
+
+Epoch: 13
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1469.49  seconds
+Train loss: 2.60; acc: 64.56%
+Val loss: 2.32; acc: 68.23%; acc_t: [68.22658596]
+Percent_change in metric: -5.23%
+Saving metrics!
+Saving network!
+
+Epoch: 14
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.78  seconds
+Train loss: 2.55; acc: 65.64%
+Val loss: 2.32; acc: 68.07%; acc_t: [68.07064877]
+Percent_change in metric: -3.88%
+Saving metrics!
+Saving network!
+
+Epoch: 15
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.86  seconds
+Train loss: 2.51; acc: 66.67%
+Val loss: 2.28; acc: 69.04%; acc_t: [69.0430274]
+Percent_change in metric: -2.54%
+Saving metrics!
+Saving network!
+
+Epoch: 16
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.76  seconds
+Train loss: 2.47; acc: 67.49%
+Val loss: 2.26; acc: 69.86%; acc_t: [69.85946884]
+Percent_change in metric: -2.90%
+Saving metrics!
+Saving network!
+
+Epoch: 17
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.07  seconds
+Train loss: 2.44; acc: 68.31%
+Val loss: 2.24; acc: 69.99%; acc_t: [69.98670546]
+Percent_change in metric: -3.68%
+Saving metrics!
+Saving network!
+
+Epoch: 18
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.33  seconds
+Train loss: 2.41; acc: 69.12%
+Val loss: 2.24; acc: 70.24%; acc_t: [70.24250813]
+Percent_change in metric: -3.52%
+Saving metrics!
+Saving network!
+
+Epoch: 19
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.86  seconds
+Train loss: 2.38; acc: 69.81%
+Val loss: 2.23; acc: 70.65%; acc_t: [70.64533283]
+Percent_change in metric: -2.15%
+Saving metrics!
+Saving network!
+
+Epoch: 20
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.80  seconds
+Train loss: 2.35; acc: 70.45%
+Val loss: 2.22; acc: 70.66%; acc_t: [70.66480543]
+Percent_change in metric: -1.53%
+Saving metrics!
+Saving network!
+
+Epoch: 21
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.52  seconds
+Train loss: 2.33; acc: 71.09%
+Val loss: 2.22; acc: 71.12%; acc_t: [71.12284159]
+Percent_change in metric: -1.19%
+Saving metrics!
+Saving network!
+
+Epoch: 22
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.68  seconds
+Train loss: 2.30; acc: 71.71%
+Val loss: 2.23; acc: 70.96%; acc_t: [70.96174299]
+Percent_change in metric: -0.57%
+Saving metrics!
+Saving network!
+
+Epoch: 23
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.95  seconds
+Train loss: 2.28; acc: 72.26%
+Val loss: 2.22; acc: 70.97%; acc_t: [70.97339527]
+Percent_change in metric: -0.10%
+Saving metrics!
+Saving network!
+
+Epoch: 24
+LR now:  0.001
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.07  seconds
+Train loss: 2.26; acc: 72.78%
+Val loss: 2.22; acc: 71.25%; acc_t: [71.25195508]
+Percent_change in metric: 0.07%
+Reducing learning rate of group 0 to 5.0000e-04. Percent change: 0.07%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 25
+LR now:  0.0005
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.19  seconds
+Train loss: 2.14; acc: 76.04%
+Val loss: 2.16; acc: 73.02%; acc_t: [73.0174706]
+Saving metrics!
+Saving network!
+
+Epoch: 26
+LR now:  0.0005
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.58  seconds
+Train loss: 2.11; acc: 76.98%
+Val loss: 2.16; acc: 73.35%; acc_t: [73.34772272]
+Saving metrics!
+Saving network!
+
+Epoch: 27
+LR now:  0.0005
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.06  seconds
+Train loss: 2.09; acc: 77.58%
+Val loss: 2.16; acc: 73.15%; acc_t: [73.15119807]
+Saving metrics!
+Saving network!
+
+Epoch: 28
+LR now:  0.0005
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.34  seconds
+Train loss: 2.07; acc: 78.02%
+Val loss: 2.16; acc: 73.26%; acc_t: [73.26381069]
+Saving metrics!
+Saving network!
+
+Epoch: 29
+LR now:  0.0005
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.50  seconds
+Train loss: 2.06; acc: 78.41%
+Val loss: 2.18; acc: 72.87%; acc_t: [72.86724224]
+Percent_change in metric: 0.67%
+Saving metrics!
+Saving network!
+
+Epoch: 30
+LR now:  0.0005
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.89  seconds
+Train loss: 2.04; acc: 78.80%
+Val loss: 2.17; acc: 73.00%; acc_t: [73.0004223]
+Percent_change in metric: 0.67%
+Saving metrics!
+Saving network!
+
+Epoch: 31
+LR now:  0.0005
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.72  seconds
+Train loss: 2.03; acc: 79.07%
+Val loss: 2.17; acc: 73.00%; acc_t: [72.99745058]
+Percent_change in metric: 0.65%
+Reducing learning rate of group 0 to 2.5000e-04. Percent change: 0.65%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 32
+LR now:  0.00025
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1468.48  seconds
+Train loss: 1.97; acc: 80.80%
+Val loss: 2.16; acc: 73.63%; acc_t: [73.62980168]
+Saving metrics!
+Saving network!
+
+Epoch: 33
+LR now:  0.00025
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.66  seconds
+Train loss: 1.96; acc: 81.38%
+Val loss: 2.16; acc: 73.54%; acc_t: [73.53533221]
+Saving metrics!
+Saving network!
+
+Epoch: 34
+LR now:  0.00025
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.46  seconds
+Train loss: 1.95; acc: 81.62%
+Val loss: 2.16; acc: 73.63%; acc_t: [73.63386824]
+Saving metrics!
+Saving network!
+
+Epoch: 35
+LR now:  0.00025
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.50  seconds
+Train loss: 1.94; acc: 81.85%
+Val loss: 2.16; acc: 73.74%; acc_t: [73.74053741]
+Saving metrics!
+Saving network!
+
+Epoch: 36
+LR now:  0.00025
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.96  seconds
+Train loss: 1.93; acc: 82.09%
+Val loss: 2.16; acc: 73.58%; acc_t: [73.5792042]
+Percent_change in metric: 0.18%
+Saving metrics!
+Saving network!
+
+Epoch: 37
+LR now:  0.00025
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.52  seconds
+Train loss: 1.92; acc: 82.32%
+Val loss: 2.16; acc: 73.66%; acc_t: [73.65607795]
+Percent_change in metric: 0.17%
+Saving metrics!
+Saving network!
+
+Epoch: 38
+LR now:  0.00025
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1528.61  seconds
+Train loss: 1.92; acc: 82.54%
+Val loss: 2.16; acc: 73.84%; acc_t: [73.83500688]
+Percent_change in metric: -0.03%
+Reducing learning rate of group 0 to 1.2500e-04. Percent change: -0.03%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 39
+LR now:  0.000125
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.93  seconds
+Train loss: 1.89; acc: 83.43%
+Val loss: 2.16; acc: 73.93%; acc_t: [73.92595721]
+Saving metrics!
+Saving network!
+
+Epoch: 40
+LR now:  0.000125
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.22  seconds
+Train loss: 1.88; acc: 83.64%
+Val loss: 2.16; acc: 73.75%; acc_t: [73.75]
+Saving metrics!
+Saving network!
+
+Epoch: 41
+LR now:  0.000125
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.56  seconds
+Train loss: 1.88; acc: 83.83%
+Val loss: 2.16; acc: 74.01%; acc_t: [74.00986924]
+Saving metrics!
+Saving network!
+
+Epoch: 42
+LR now:  0.000125
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.22  seconds
+Train loss: 1.87; acc: 83.96%
+Val loss: 2.16; acc: 73.89%; acc_t: [73.89428491]
+Saving metrics!
+Saving network!
+
+Epoch: 43
+LR now:  0.000125
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.79  seconds
+Train loss: 1.87; acc: 84.07%
+Val loss: 2.16; acc: 73.80%; acc_t: [73.80333458]
+Percent_change in metric: 0.26%
+Saving metrics!
+Saving network!
+
+Epoch: 44
+LR now:  0.000125
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.38  seconds
+Train loss: 1.87; acc: 84.23%
+Val loss: 2.16; acc: 73.81%; acc_t: [73.81334459]
+Percent_change in metric: 0.28%
+Saving metrics!
+Saving network!
+
+Epoch: 45
+LR now:  0.000125
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.25  seconds
+Train loss: 1.86; acc: 84.29%
+Val loss: 2.17; acc: 73.97%; acc_t: [73.96818694]
+Percent_change in metric: 0.33%
+Reducing learning rate of group 0 to 6.2500e-05. Percent change: 0.33%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 46
+LR now:  6.25e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.64  seconds
+Train loss: 1.85; acc: 84.75%
+Val loss: 2.16; acc: 73.84%; acc_t: [73.83500688]
+Saving metrics!
+Saving network!
+
+Epoch: 47
+LR now:  6.25e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.22  seconds
+Train loss: 1.84; acc: 84.88%
+Val loss: 2.16; acc: 73.97%; acc_t: [73.97280093]
+Saving metrics!
+Saving network!
+
+Epoch: 48
+LR now:  6.25e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.76  seconds
+Train loss: 1.84; acc: 84.96%
+Val loss: 2.16; acc: 73.75%; acc_t: [73.75461399]
+Saving metrics!
+Saving network!
+
+Epoch: 49
+LR now:  6.25e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.25  seconds
+Train loss: 1.84; acc: 85.06%
+Val loss: 2.17; acc: 73.86%; acc_t: [73.86316004]
+Saving metrics!
+Saving network!
+
+Epoch: 50
+LR now:  6.25e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.25  seconds
+Train loss: 1.84; acc: 85.07%
+Val loss: 2.17; acc: 74.01%; acc_t: [74.00986924]
+Percent_change in metric: 0.23%
+Saving metrics!
+Saving network!
+
+Epoch: 51
+LR now:  6.25e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1842.55  seconds
+Train loss: 1.84; acc: 85.12%
+Val loss: 2.17; acc: 73.82%; acc_t: [73.82444945]
+Percent_change in metric: 0.35%
+Saving metrics!
+Saving network!
+
+Epoch: 52
+LR now:  6.25e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.43  seconds
+Train loss: 1.83; acc: 85.20%
+Val loss: 2.17; acc: 73.85%; acc_t: [73.84611174]
+Percent_change in metric: 0.35%
+Reducing learning rate of group 0 to 3.1250e-05. Percent change: 0.35%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 53
+LR now:  3.125e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.26  seconds
+Train loss: 1.83; acc: 85.44%
+Val loss: 2.17; acc: 73.84%; acc_t: [73.83907345]
+Saving metrics!
+Saving network!
+
+Epoch: 54
+LR now:  3.125e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1764.44  seconds
+Train loss: 1.82; acc: 85.48%
+Val loss: 2.17; acc: 73.87%; acc_t: [73.87074575]
+Saving metrics!
+Saving network!
+
+Epoch: 55
+LR now:  3.125e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.31  seconds
+Train loss: 1.82; acc: 85.55%
+Val loss: 2.17; acc: 73.88%; acc_t: [73.88075576]
+Saving metrics!
+Saving network!
+
+Epoch: 56
+LR now:  3.125e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.68  seconds
+Train loss: 1.82; acc: 85.61%
+Val loss: 2.17; acc: 73.77%; acc_t: [73.76814314]
+Saving metrics!
+Saving network!
+
+Epoch: 57
+LR now:  3.125e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1468.68  seconds
+Train loss: 1.82; acc: 85.63%
+Val loss: 2.17; acc: 73.82%; acc_t: [73.82147773]
+Percent_change in metric: 0.07%
+Saving metrics!
+Saving network!
+
+Epoch: 58
+LR now:  3.125e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.46  seconds
+Train loss: 1.82; acc: 85.67%
+Val loss: 2.17; acc: 73.82%; acc_t: [73.82093031]
+Percent_change in metric: -0.16%
+Saving metrics!
+Saving network!
+
+Epoch: 59
+LR now:  3.125e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.21  seconds
+Train loss: 1.82; acc: 85.70%
+Val loss: 2.17; acc: 74.01%; acc_t: [74.01096409]
+Percent_change in metric: -0.03%
+Reducing learning rate of group 0 to 1.5625e-05. Percent change: -0.03%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 60
+LR now:  1.5625e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.66  seconds
+Train loss: 1.82; acc: 85.79%
+Val loss: 2.17; acc: 73.93%; acc_t: [73.92650463]
+Saving metrics!
+Saving network!
+
+Epoch: 61
+LR now:  1.5625e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.79  seconds
+Train loss: 1.81; acc: 85.83%
+Val loss: 2.17; acc: 73.88%; acc_t: [73.87668919]
+Saving metrics!
+Saving network!
+
+Epoch: 62
+LR now:  1.5625e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1468.08  seconds
+Train loss: 1.81; acc: 85.87%
+Val loss: 2.17; acc: 73.93%; acc_t: [73.93002377]
+Saving metrics!
+Saving network!
+
+Epoch: 63
+LR now:  1.5625e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.08  seconds
+Train loss: 1.81; acc: 85.82%
+Val loss: 2.17; acc: 73.91%; acc_t: [73.91242805]
+Saving metrics!
+Saving network!
+
+Epoch: 64
+LR now:  1.5625e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.88  seconds
+Train loss: 1.81; acc: 85.88%
+Val loss: 2.17; acc: 73.92%; acc_t: [73.92298549]
+Percent_change in metric: -0.01%
+Saving metrics!
+Saving network!
+
+Epoch: 65
+LR now:  1.5625e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1469.48  seconds
+Train loss: 1.81; acc: 85.86%
+Val loss: 2.17; acc: 73.82%; acc_t: [73.82093031]
+Percent_change in metric: 0.05%
+Saving metrics!
+Saving network!
+
+Epoch: 66
+LR now:  1.5625e-05
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.56  seconds
+Train loss: 1.81; acc: 85.89%
+Val loss: 2.17; acc: 73.84%; acc_t: [73.84204517]
+Percent_change in metric: 0.18%
+Reducing learning rate of group 0 to 7.8125e-06. Percent change: 0.18%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 67
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.86  seconds
+Train loss: 1.81; acc: 85.93%
+Val loss: 2.17; acc: 73.86%; acc_t: [73.86316004]
+Saving metrics!
+Saving network!
+
+Epoch: 68
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.86  seconds
+Train loss: 1.81; acc: 85.93%
+Val loss: 2.17; acc: 73.86%; acc_t: [73.85964089]
+Saving metrics!
+Saving network!
+
+Epoch: 69
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.98  seconds
+Train loss: 1.81; acc: 85.97%
+Val loss: 2.17; acc: 73.74%; acc_t: [73.73647085]
+Saving metrics!
+Saving network!
+
+Epoch: 70
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.88  seconds
+Train loss: 1.81; acc: 86.02%
+Val loss: 2.17; acc: 73.80%; acc_t: [73.7962963]
+Saving metrics!
+Saving network!
+
+Epoch: 71
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.88  seconds
+Train loss: 1.81; acc: 85.97%
+Val loss: 2.17; acc: 73.78%; acc_t: [73.78221972]
+Percent_change in metric: 0.05%
+Saving metrics!
+Saving network!
+
+Epoch: 72
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.04  seconds
+Train loss: 1.81; acc: 86.04%
+Val loss: 2.17; acc: 73.86%; acc_t: [73.85964089]
+Percent_change in metric: -0.01%
+Saving metrics!
+Saving network!
+
+Epoch: 73
+LR now:  7.8125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1704.85  seconds
+Train loss: 1.81; acc: 86.01%
+Val loss: 2.17; acc: 73.81%; acc_t: [73.80685373]
+Percent_change in metric: -0.02%
+Reducing learning rate of group 0 to 3.9063e-06. Percent change: -0.02%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 74
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.47  seconds
+Train loss: 1.81; acc: 86.01%
+Val loss: 2.17; acc: 73.84%; acc_t: [73.83500688]
+Saving metrics!
+Saving network!
+
+Epoch: 75
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1465.28  seconds
+Train loss: 1.81; acc: 86.08%
+Val loss: 2.17; acc: 73.82%; acc_t: [73.82444945]
+Saving metrics!
+Saving network!
+
+Epoch: 76
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.60  seconds
+Train loss: 1.81; acc: 86.06%
+Val loss: 2.17; acc: 73.83%; acc_t: [73.83148774]
+Saving metrics!
+Saving network!
+
+Epoch: 77
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1614.49  seconds
+Train loss: 1.81; acc: 86.05%
+Val loss: 2.17; acc: 73.81%; acc_t: [73.80685373]
+Saving metrics!
+Saving network!
+
+Epoch: 78
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1661.08  seconds
+Train loss: 1.81; acc: 86.09%
+Val loss: 2.17; acc: 73.80%; acc_t: [73.79981544]
+Percent_change in metric: 0.04%
+Saving metrics!
+Saving network!
+
+Epoch: 79
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1467.34  seconds
+Train loss: 1.81; acc: 86.07%
+Val loss: 2.17; acc: 73.91%; acc_t: [73.90538976]
+Percent_change in metric: -0.06%
+Saving metrics!
+Saving network!
+
+Epoch: 80
+LR now:  3.90625e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.43  seconds
+Train loss: 1.81; acc: 86.12%
+Val loss: 2.17; acc: 73.86%; acc_t: [73.85964089]
+Percent_change in metric: -0.07%
+Reducing learning rate of group 0 to 1.9531e-06. Percent change: -0.07%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+Epoch: 81
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1466.27  seconds
+Train loss: 1.81; acc: 86.11%
+Val loss: 2.17; acc: 73.80%; acc_t: [73.7962963]
+Saving metrics!
+Saving network!
+
+Epoch: 82
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1464.86  seconds
+Train loss: 1.81; acc: 86.11%
+Val loss: 2.17; acc: 73.84%; acc_t: [73.84204517]
+Saving metrics!
+Saving network!
+
+Epoch: 83
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1463.96  seconds
+Train loss: 1.81; acc: 86.07%
+Val loss: 2.17; acc: 73.86%; acc_t: [73.85964089]
+Saving metrics!
+Saving network!
+
+Epoch: 84
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1464.11  seconds
+Train loss: 1.81; acc: 86.08%
+Val loss: 2.17; acc: 73.84%; acc_t: [73.84204517]
+Saving metrics!
+Saving network!
+
+Epoch: 85
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1464.57  seconds
+Train loss: 1.81; acc: 86.10%
+Val loss: 2.17; acc: 73.83%; acc_t: [73.83148774]
+Percent_change in metric: 0.09%
+Saving metrics!
+Saving network!
+
+Epoch: 86
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1464.29  seconds
+Train loss: 1.81; acc: 86.11%
+Val loss: 2.17; acc: 73.84%; acc_t: [73.83852603]
+Percent_change in metric: 0.06%
+Saving metrics!
+Saving network!
+
+Epoch: 87
+LR now:  1.953125e-06
+Epoch is running - 1 batch done!
+Max GPU(s) memory reserved: 12.291015625 Gb; 1 GPU(s)
+Epoch time:  1465.86  seconds
+Train loss: 1.81; acc: 86.12%
+Val loss: 2.17; acc: 73.75%; acc_t: [73.75406657]
+Percent_change in metric: 0.12%
+Reducing learning rate of group 0 to 9.7656e-07. Percent change: 0.12%. Patience exceeded.
+Saving metrics!
+Saving network!
+
+
+ Done training! - LR reached 1e-6 i.e. converged
+
+Getting Ecoset ready!
+Minimum count per class: 601
+Maximum count per class: 4900
+/share/klab/datasets/ecoset_square256_proper_chunks.h5
+Number of classes: 565
+Test accuracies over time (%): [74.18637387]
+Saving metrics!
