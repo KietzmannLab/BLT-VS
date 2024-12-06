@@ -24,7 +24,7 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
 | CORNet-S        | Ecoset  | 71.3              | 16               | 53.1           | - |
 | CORNet-S (original) | Imagenet | 73.1        | 16 | 53.1 | 0.189 (#107) |
 
-Increasing timesteps do offer classification benefits, increasing the accuracies by more than 15% in both models.
+Increasing timesteps do offer classification benefits, increasing the %accuracies by more than 15 in both models.
 
 ![ecoset_imagenet_accs](ecoset_imagenet_accs.png)
 
