@@ -13,7 +13,7 @@ More information about the architecture and the design choices can be found unde
 - **Imagenet - non_bio_unroll - 6** (default): This model outputs 1000-way class logits over 6 timesteps. 
 - **Ecoset - bio_unroll - 12**: This model output 565-way class logits over 8 timesteps when the information from input reaches readout.
 
-These models are available through HuggingFace - https://huggingface.co/novelmartis/blt_vs_model - and are pulled from there for evaluation. These models have classification accuracies comparable to ResNet-50 and [CORNet-S](https://github.com/dicarlolab/CORnet) trained on the same data. 
+These models are available through HuggingFace - https://huggingface.co/novelmartis/blt_vs_model - and are pulled from there for evaluation. These models have classification accuracies comparable to ResNet-50 and [CORNet-S](https://github.com/dicarlolab/CORnet) trained with the same pipeline. 
 
 | Model Name       | Dataset   | Top-1 Accuracy (%) | FLOPs (Giga) | Parameters (M) | BrainScore (rank; 04/11/24) |
 |------------------|-----------|--------------------|-------------------|----------------|------------|
