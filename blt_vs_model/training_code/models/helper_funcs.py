@@ -23,7 +23,7 @@ def get_network_model(hyp):
 
     if network == 'blt_vs':
 
-        from .BLT_net import BLT_VS
+        from .BLT_VS import BLT_VS
         net = BLT_VS(timesteps = timesteps, num_classes=num_classes, lateral_connections=lateral_connections, topdown_connections=topdown_connections,skip_connections=skip_connections, bio_unroll=bio_unroll, readout_type=readout_type)
         net_name = f'{network}_slt_{skip_connections}{lateral_connections}{topdown_connections}_biounroll_{bio_unroll}_t_{timesteps}_readout_{readout_type}_dataset_{dataset}_num_{netnum}'
 
