@@ -23,7 +23,7 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
 | ResNet-50 (original, v2)         | Imagenet  |       80.8        |     4          |    24.6      | 0.198 |
 | CORNet-S        | Ecoset  | 71.3              | 16               | 53.1           | - |
 | CORNet-S (original) | Imagenet | 73.1        | 16 | 53.1 | 0.189 |
-| [VOneCORnet-S (original)](https://github.com/dicarlolab/vonenet) | Imagenet | ~70     | -  | - | .307 |
+| [VOneCORnet-S (original)](https://github.com/dicarlolab/vonenet) | Imagenet | ~70     | -  | - | 0.307 |
 
 Increasing timesteps do offer classification benefits, increasing the %accuracies by more than 15 in both models.
 
