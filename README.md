@@ -15,14 +15,15 @@ More information about the architecture and the design choices can be found unde
 
 These models are available through HuggingFace - https://huggingface.co/novelmartis/blt_vs_model - and are pulled from there for evaluation. These models have classification accuracies comparable to ResNet-50 and [CORNet-S](https://github.com/dicarlolab/CORnet) trained with the same pipeline. 
 
-| Model Name       | Dataset   | Top-1 Accuracy (%) | FLOPs (Giga) | Parameters (M) | BrainScore (rank; 04/11/24) |
+| Model Name       | Dataset   | Top-1 Accuracy (%) | FLOPs (Giga) | Parameters (M) | BrainScore (30/01/25) |
 |------------------|-----------|--------------------|-------------------|----------------|------------|
-| BLT_VS (Imagenet - non_bio_unroll) | Imagenet  | 70.2              | 158               | 34.9           | 0.310 (#43) |
+| BLT_VS (Imagenet - non_bio_unroll) | Imagenet  | 70.2              | 158               | 34.9           | 0.310 |
 | BLT_VS (Ecoset - bio_unroll)   | Ecoset    | 69.8              | 115               | 27.3           | - |
 | ResNet-50         | Ecoset  | 74.1              | 4               |  24.6          | - |
-| ResNet-50 (original, v2)         | Imagenet  |       80.8        |     4          |    24.6      | 0.198 (#73) |
+| ResNet-50 (original, v2)         | Imagenet  |       80.8        |     4          |    24.6      | 0.198 |
 | CORNet-S        | Ecoset  | 71.3              | 16               | 53.1           | - |
-| CORNet-S (original) | Imagenet | 73.1        | 16 | 53.1 | 0.189 (#107) |
+| CORNet-S (original) | Imagenet | 73.1        | 16 | 53.1 | 0.189 |
+| [VOneCORnet-S (original)](https://github.com/dicarlolab/vonenet) | Imagenet | ~70     | -  | - | .307 |
 
 Increasing timesteps do offer classification benefits, increasing the %accuracies by more than 15 in both models.
 
