@@ -20,7 +20,7 @@ These models are available through HuggingFace - https://huggingface.co/novelmar
 | BLT_VS (Imagenet - non_bio_unroll) | Imagenet  | 70.2              | 158               | 34.9           | 0.310 |
 | BLT_VS (Ecoset - bio_unroll)   | Ecoset    | 69.8              | 115               | 27.3           | - |
 | ResNet-50         | Ecoset  | 74.1              | 4               |  24.6          | - |
-| ResNet-50 (original, v2)         | Imagenet  |       80.8        |     4          |    24.6      | 0.198 |
+| ResNet-50 (original, v2-tf)         | Imagenet  |       80.8        |     4          |    24.6      | 0.198 |
 | CORNet-S        | Ecoset  | 71.3              | 16               | 53.1           | - |
 | CORNet-S (original) | Imagenet | 73.1        | 16 | 53.1 | 0.189 |
 | [VOneCORnet-S (original)](https://github.com/dicarlolab/vonenet) | Imagenet | ~70     | -  | - | 0.307 |
