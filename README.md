@@ -6,6 +6,17 @@ This repository contains the **BLT-VS** (Bottom-up Lateral Top-down - Ventral St
 
 More information about the architecture and the design choices can be found under [Network design](#network-design). The model definition can be found at [blt_vs_model/blt_vs.py](blt_vs_model/blt_vs.py)
 
+If you use these networks in your work, please cite this repository as follows:
+
+### BibTeX
+```bibtex
+@misc{bltvs24,
+  title        = {BLT-VS: a recurrent, columnar, model of the ventral stream},
+  author       = {Thorat, Sushrut and Kietzmann, Tim C.},
+  howpublished = {https://github.com/KietzmannLab/BLT-VS},
+  year         = {2024}
+}
+
 ---
 
 ## Models shipped
