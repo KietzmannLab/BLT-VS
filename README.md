@@ -16,6 +16,7 @@ If you use these networks in your work, please cite this repository as follows:
   howpublished = {https://github.com/KietzmannLab/BLT-VS},
   year         = {2024}
 }
+```
 
 ---
 
