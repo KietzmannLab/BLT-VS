@@ -61,10 +61,13 @@ class BLT_VS(nn.Module):
         # Define network areas and configurations
         self.areas = ["Retina", "LGN", "V1", "V2", "V3", "V4", "LOC", "Readout"]
 
+        if image_size not in [224, 128]:
+            raise ValueError("Image size must be 224 or 128.")
+
         if image_size == 224:
             self.kernel_sizes = [7, 7, 5, 1, 5, 3, 3, 5]
             self.kernel_sizes_lateral = [0, 0, 5, 5, 5, 5, 5, 0]
-        else:
+        elif image_size == 128:
             self.kernel_sizes = [5, 3, 3, 1, 3, 3, 3, 3]
             self.kernel_sizes_lateral = [0, 0, 3, 3, 3, 3, 3, 0]
 
@@ -204,6 +207,12 @@ class BLT_VS(nn.Module):
                 readout_output is as above.
                 activations is a dict with structure activations[area][timestep] = activation
         """
+
+        if img_input.size(2) != self.image_size or img_input.size(3) != self.image_size:
+            raise ValueError(
+                f"Input image size must be {self.image_size}x{self.image_size}."
+            )
+
         if extract_actvs:
             if areas is None or timesteps is None:
                 raise ValueError(
