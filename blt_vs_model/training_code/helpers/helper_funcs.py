@@ -1,3 +1,33 @@
+
+"""
+Data Loading, Augmentation, Scheduling, and Logging Utilities
+
+This file provides all supporting infrastructure required for training
+vision models. It does not define model architectures, but instead
+controls how data is loaded, preprocessed, weighted, scheduled, and logged.
+
+Main Responsibilities:
+----------------------
+1. Load datasets (EcoSet or ImageNet) and create PyTorch DataLoaders.
+2. Apply configurable image augmentations (resize, crop, blur, flip, etc.).
+3. Compute class weights to compensate for class imbalance.
+4. Define a custom learning rate scheduler based on linear trend fitting.
+5. Create logging directories for saving metrics and model checkpoints.
+
+Scientific Role:
+----------------
+This module defines the experimental environment under which models
+are trained. While the architecture determines representational
+capacity, this file determines the training protocol and data
+conditions that shape learned representations.
+
+In summary:
+-----------
+This file controls how data enters the model and how training is
+managed, but it does not implement the neural network itself.
+"""
+
+
 ##################
 ### Importing required packages
 ##################

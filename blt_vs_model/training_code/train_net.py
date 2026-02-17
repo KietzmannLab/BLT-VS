@@ -1,3 +1,62 @@
+
+"""
+Training Script for Vision Models (BLT-VS and Baselines)
+
+This script implements the full experimental pipeline for training and evaluating
+vision models (e.g., BLT-VS, ResNet, CORnet, vNet) on large-scale image datasets
+such as ImageNet or EcoSet.
+
+High-Level Functionality:
+-------------------------
+1. Parses command-line arguments to configure:
+   - Network architecture (e.g., BLT-VS, ResNet)
+   - Recurrence settings (timesteps, top-down, lateral, skip connections)
+   - Optimization hyperparameters (learning rate, batch size, epochs)
+   - Dataset and augmentation choices
+
+2. Builds a structured hyperparameter dictionary (hyp) to ensure
+   reproducibility and consistent experiment configuration.
+
+3. Loads dataset loaders (train/val/test) with specified augmentations.
+
+4. Instantiates the selected network architecture dynamically,
+   allowing fair comparison across different models.
+
+5. Sets up:
+   - Loss function (CrossEntropy with optional label smoothing)
+   - Optimizer (e.g., Adam)
+   - Learning rate scheduler (warmup + adaptive decay)
+   - Mixed precision training (AMP)
+   - Gradient clipping (for training stability)
+
+6. Executes the main training loop:
+   - Forward pass
+   - Loss computation (averaged across timesteps for recurrent models)
+   - Backpropagation (including recurrent gradient flow)
+   - Optimizer step
+   - Validation evaluation
+   - Learning rate scheduling
+   - Logging and checkpoint saving
+
+7. After training completion:
+   - Saves final model weights
+   - Evaluates performance on the test set
+   - Stores all metrics for later analysis
+
+Scientific Role:
+----------------
+This script defines the experimental training protocol for all models.
+It ensures identical optimization conditions across architectures,
+allowing meaningful comparison of recurrent (BLT-VS) and feedforward
+models.
+
+In summary:
+-----------
+This file does not define the architecture itself.
+It defines how the architecture learns.
+"""
+
+
 ##################
 ### Setting up and training a BLT network modelling the ventral stream
 # 224px inputs <-> 5deg visual angle
