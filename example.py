@@ -18,7 +18,7 @@ def main(dataset):
     transform = get_blt_vs_transform()
 
     # Load a local image
-    image_path = 'turtle.jpg'  # Replace with your local image path
+    image_path = 'car.jpg'  # Replace with your local image path
     image = Image.open(image_path)
 
     # Display the image

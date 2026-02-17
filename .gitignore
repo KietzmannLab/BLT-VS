@@ -1,3 +1,6 @@
 
 blt_vs_model/.DS_Store
 .DS_Store
+*.txt
+blt_vs_model.egg-info/PKG-INFO
+*.pyc
