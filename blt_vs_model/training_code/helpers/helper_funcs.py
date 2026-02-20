@@ -34,6 +34,7 @@ ssh lemoehlenkam@hpc3.rz.uos.de
 ### Importing required packages
 ##################
 
+from torch.utils.data import Subset
 import torch
 import torchvision.transforms as transforms
 import numpy as np
@@ -48,7 +49,54 @@ from collections import Counter
 ## Loading the dataset loaders
 ##############################
 
+
+
 def get_Dataset_loaders(hyp, splits):
+
+    # ===============================
+    # DEBUG MODE: Completely bypass real datasets
+    # ===============================
+    if hyp.get("debug_small_dataset", False):
+        print("Using FakeData debug dataset")
+
+        from torchvision.datasets import FakeData
+        from torch.utils.data import DataLoader
+        from torchvision import transforms
+        import torch
+
+        transform = transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.ToTensor()
+        ])
+
+        train_data = FakeData(
+            size=200,
+            image_size=(3, 224, 224),
+            num_classes=665,
+            transform=transform
+        )
+
+        val_data = FakeData(
+            size=50,
+            image_size=(3, 224, 224),
+            num_classes=665,
+            transform=transform
+        )
+
+        train_loader = DataLoader(
+            train_data,
+            batch_size=hyp['optimizer']['batch_size'],
+            shuffle=True,
+            num_workers=0
+        )
+
+        val_loader = DataLoader(
+            val_data,
+            batch_size=hyp['misc']['batch_size_val_test'],
+            num_workers=0
+        )
+
+        return train_loader, val_loader, None, hyp
 
     # create Datasets for the splits
     if hyp['dataset']['name'] == 'ecoset':
