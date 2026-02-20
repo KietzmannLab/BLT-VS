@@ -25,6 +25,8 @@ In summary:
 -----------
 This file controls how data enters the model and how training is
 managed, but it does not implement the neural network itself.
+
+ssh lemoehlenkam@hpc3.rz.uos.de
 """
 
 

@@ -1,3 +1,38 @@
+
+"""
+Helper Functions for Model Construction, Optimization, and Evaluation
+
+This file provides utility functions used by the training script to:
+
+1. Instantiate different network architectures (e.g., BLT_VS, ResNet, vNet).
+2. Configure the optimizer for training.
+3. Compute evaluation metrics (accuracy).
+4. Perform validation/testing passes.
+5. Apply adaptive gradient clipping for training stability.
+6. Estimate computational complexity (FLOPs).
+
+High-Level Role:
+----------------
+This module acts as the bridge between the training loop (train.py)
+and the model architectures. It abstracts away model selection,
+optimizer setup, and evaluation logic so that the training script
+remains architecture-agnostic.
+
+Scientific Relevance:
+---------------------
+- `get_network_model()` determines which architecture is trained
+  and how architectural hyperparameters (e.g., recurrence,
+  top-down connections, timesteps) are configured.
+- `compute_accuracy()` and `eval_network()` define how model
+  performance is measured across timesteps.
+- `adaptive_gradient_clipping()` stabilizes recurrent training,
+  preventing exploding gradients.
+
+This file does NOT define model architecture.
+It defines how models are selected, trained, and evaluated.
+"""
+
+
 import torch
 import torch.optim as optim
 import numpy as np

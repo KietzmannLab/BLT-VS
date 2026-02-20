@@ -1,5 +1,5 @@
 import argparse
-import torch
+import torch # type: ignore
 from blt_vs_model import blt_vs_model, get_blt_vs_transform, load_class_names
 from PIL import Image
 import requests

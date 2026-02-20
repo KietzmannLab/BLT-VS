@@ -79,11 +79,13 @@ parser.add_argument('--bio_unroll', type=int, default=0)
 parser.add_argument('--readout_type', type=str, default='multi')
 
 parser.add_argument('--dataset', type=str, default='ecoset')
-parser.add_argument('--n_epochs', type=int, default=-1) # if -1 then "on-convergence" condition: training finishes when scheduler hits lr of 1e-6
-parser.add_argument('--batch_size', type=int, default=1024)
-parser.add_argument('--batch_size_val_test', type=int, default=256)
+parser.add_argument('--batch_size', type=int, default=4)
+parser.add_argument('--batch_size_val_test', type=int, default=4)
+parser.add_argument('--n_epochs', type=int, default=1)
 parser.add_argument('--learning_rate', type=float, default=1e-3)
 parser.add_argument('--start_from_epoch', type=int, default=0)
+parser.add_argument('--num_workers', type=int, default=2)
+parser.add_argument('--max_steps', type=int, default=-1)
 
 parser.add_argument('--grad_clipping', type=int, default=1)
 
@@ -144,7 +146,7 @@ hyp = {
         'n_epochs': args.n_epochs, # number of epochs (full cycle through the dataset)
         'device': 'cuda', # device to train the network on
         'dataloader': {
-            'num_workers_train': 10, # number of cpu workers processing the batches 
+            'num_workers_train': args.num_workers, # number of cpu workers processing the batches 
             'prefetch_factor_train': 4, # number of batches kept in memory by each worker (providing quick access for the gpu)
             'num_workers_val_test': 3, # do not need lots of workers for val/test
             'prefetch_factor_val_test': 4 

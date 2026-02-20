@@ -20,8 +20,8 @@ and prepares it for training or inference.
 """
 
 
-import torch
-from huggingface_hub import hf_hub_download
+import torch # type: ignore
+from huggingface_hub import hf_hub_download # type: ignore
 from .blt_vs import BLT_VS  # Import your BLT_VS class
 
 def blt_vs_model(pretrained=True, training_dataset='imagenet'):
