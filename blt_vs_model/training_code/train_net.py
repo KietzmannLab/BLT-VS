@@ -275,7 +275,8 @@ if __name__ == '__main__':
             imgs = images.to(hyp['optimizer']['device'])
             lbls = labels.to(hyp['optimizer']['device'])
             # Move weights to the same device as inputs
-            criterion.weight = criterion.weight.to(imgs.device)
+            if criterion.weight is not None:
+                criterion.weight = criterion.weight.to(imgs.device)
 
             optimizer.zero_grad()
             
@@ -371,8 +372,16 @@ if __name__ == '__main__':
     # getting test loss and acc
     _, _, test_loader, hyp = get_Dataset_loaders(hyp,['test'])
     net.eval()
-    test_loss_running, test_acc_running = eval_network(test_loader,net,criterion,hyp)
-    test_acc = test_acc_running/len(test_loader)
-    print(f'Test accuracies over time (%): {test_acc}')
-    print('Saving metrics!')
-    np.savez(log_path+'/loss_'+net_name+'.npz', train_loss=train_losses, val_loss=val_losses, train_accuracies=train_accuracies, val_accuracies=val_accuracies, test_accuracies=test_acc)
+    if test_loader is not None:
+        test_loss_running, test_acc_running = eval_network(test_loader, net, criterion, hyp)
+        test_acc = test_acc_running / len(test_loader)
+        print("Test acc:", test_acc)
+    else:
+        print("Skipping test evaluation (no test loader in debug mode)")
+    if test_loader is not None:
+        print(f'Test accuracies over time (%): {test_acc}')
+        print('Saving metrics!')
+        np.savez(log_path+'/loss_'+net_name+'.npz', train_loss=train_losses, val_loss=val_losses, train_accuracies=train_accuracies, val_accuracies=val_accuracies, test_accuracies=test_acc)
+    else:
+        print('Saving metrics!')
+        np.savez(log_path+'/loss_'+net_name+'.npz', train_loss=train_losses, val_loss=val_losses, train_accuracies=train_accuracies, val_accuracies=val_accuracies)
