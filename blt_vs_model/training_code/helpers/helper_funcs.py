@@ -305,7 +305,7 @@ class LinearFitScheduler(torch.optim.lr_scheduler._LRScheduler):
         self.num_bad_epochs = 0  # Track the number of epochs without improvement
         self.verbose = verbose
         self.metric_history = []
-        super(LinearFitScheduler, self).__init__(optimizer, last_epoch, verbose)
+        super(LinearFitScheduler, self).__init__(optimizer, last_epoch=last_epoch, verbose=verbose)
 
     def step(self, metric=None):
         """
