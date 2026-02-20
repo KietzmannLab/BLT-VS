@@ -64,6 +64,10 @@ def get_Dataset_loaders(hyp, splits):
         from torchvision import transforms
         import torch
 
+        hyp['dataset']['n_classes'] = 665
+        hyp['dataset']['class_weights'] = None
+
+
         transform = transforms.Compose([
             transforms.Resize((224, 224)),
             transforms.ToTensor()
