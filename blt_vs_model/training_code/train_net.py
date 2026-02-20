@@ -77,6 +77,7 @@ parser.add_argument('--topdown_connections', type=int, default=1)
 parser.add_argument('--skip_connections', type=int, default=1)
 parser.add_argument('--bio_unroll', type=int, default=0)
 parser.add_argument('--readout_type', type=str, default='multi')
+parser.add_argument('--debug_small_dataset', type=int, default=0)
 
 parser.add_argument('--dataset', type=str, default='ecoset')
 parser.add_argument('--batch_size', type=int, default=4)
@@ -161,6 +162,7 @@ hyp = {
     }
 }
 
+hyp["debug_small_dataset"] = bool(args.debug_small_dataset)
 ##################
 ### Training and evaluation
 ##################
