@@ -1,31 +1,3 @@
-
-"""
-Utility function for loading dataset class labels.
-
-This function loads the class names corresponding to the dataset used
-by the BLT-VS model (e.g., ImageNet or EcoSet). The class names are
-stored in JSON files inside the package and are indexed by class ID.
-
-Key responsibilities:
----------------------
-- Validate the requested dataset name.
-- Load the corresponding JSON file containing class labels.
-- Ensure compatibility across different Python versions.
-- Return class names in correct index order for prediction decoding.
-
-Why this is needed:
--------------------
-The BLT-VS model outputs class logits indexed by integer class IDs.
-To interpret predictions (e.g., mapping predicted index → "golden retriever"),
-we need to load the correct class name list for the dataset used during training.
-
-Returns:
---------
-class_names (list of str):
-    List where index i corresponds to the name of class i.
-"""
-
-
 import json
 import sys
 

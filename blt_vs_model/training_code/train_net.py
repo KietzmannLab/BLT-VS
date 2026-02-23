@@ -1,62 +1,3 @@
-
-"""
-Training Script for Vision Models (BLT-VS and Baselines)
-
-This script implements the full experimental pipeline for training and evaluating
-vision models (e.g., BLT-VS, ResNet, CORnet, vNet) on large-scale image datasets
-such as ImageNet or EcoSet.
-
-High-Level Functionality:
--------------------------
-1. Parses command-line arguments to configure:
-   - Network architecture (e.g., BLT-VS, ResNet)
-   - Recurrence settings (timesteps, top-down, lateral, skip connections)
-   - Optimization hyperparameters (learning rate, batch size, epochs)
-   - Dataset and augmentation choices
-
-2. Builds a structured hyperparameter dictionary (hyp) to ensure
-   reproducibility and consistent experiment configuration.
-
-3. Loads dataset loaders (train/val/test) with specified augmentations.
-
-4. Instantiates the selected network architecture dynamically,
-   allowing fair comparison across different models.
-
-5. Sets up:
-   - Loss function (CrossEntropy with optional label smoothing)
-   - Optimizer (e.g., Adam)
-   - Learning rate scheduler (warmup + adaptive decay)
-   - Mixed precision training (AMP)
-   - Gradient clipping (for training stability)
-
-6. Executes the main training loop:
-   - Forward pass
-   - Loss computation (averaged across timesteps for recurrent models)
-   - Backpropagation (including recurrent gradient flow)
-   - Optimizer step
-   - Validation evaluation
-   - Learning rate scheduling
-   - Logging and checkpoint saving
-
-7. After training completion:
-   - Saves final model weights
-   - Evaluates performance on the test set
-   - Stores all metrics for later analysis
-
-Scientific Role:
-----------------
-This script defines the experimental training protocol for all models.
-It ensures identical optimization conditions across architectures,
-allowing meaningful comparison of recurrent (BLT-VS) and feedforward
-models.
-
-In summary:
------------
-This file does not define the architecture itself.
-It defines how the architecture learns.
-"""
-
-
 ##################
 ### Setting up and training a BLT network modelling the ventral stream
 # 224px inputs <-> 5deg visual angle
@@ -67,12 +8,6 @@ It defines how the architecture learns.
 ##################
 
 import argparse
-from tqdm import tqdm
-import matplotlib
-from datetime import datetime
-matplotlib.use("Agg")  # Important for HPC / no GUI
-import matplotlib.pyplot as plt
-
 parser = argparse.ArgumentParser(description='Obtaining hyps')
 
 parser.add_argument('--network', type=str, default='blt_vs') # blt_vs / rn50 / others...
@@ -83,21 +18,13 @@ parser.add_argument('--topdown_connections', type=int, default=1)
 parser.add_argument('--skip_connections', type=int, default=1)
 parser.add_argument('--bio_unroll', type=int, default=0)
 parser.add_argument('--readout_type', type=str, default='multi')
-parser.add_argument(
-    "--dataset_mode",
-    type=int,
-    default=0,
-    help="0 = EcoSet, 1 = FakeData, 2 = CIFAR100"
-)
 
 parser.add_argument('--dataset', type=str, default='ecoset')
-parser.add_argument('--batch_size', type=int, default=4)
-parser.add_argument('--batch_size_val_test', type=int, default=4)
-parser.add_argument('--n_epochs', type=int, default=1)
+parser.add_argument('--n_epochs', type=int, default=-1) # if -1 then "on-convergence" condition: training finishes when scheduler hits lr of 1e-6
+parser.add_argument('--batch_size', type=int, default=1024)
+parser.add_argument('--batch_size_val_test', type=int, default=256)
 parser.add_argument('--learning_rate', type=float, default=1e-3)
 parser.add_argument('--start_from_epoch', type=int, default=0)
-parser.add_argument('--num_workers', type=int, default=2)
-parser.add_argument('--max_steps', type=int, default=-1)
 
 parser.add_argument('--grad_clipping', type=int, default=1)
 
@@ -158,7 +85,7 @@ hyp = {
         'n_epochs': args.n_epochs, # number of epochs (full cycle through the dataset)
         'device': 'cuda', # device to train the network on
         'dataloader': {
-            'num_workers_train': args.num_workers, # number of cpu workers processing the batches 
+            'num_workers_train': 10, # number of cpu workers processing the batches 
             'prefetch_factor_train': 4, # number of batches kept in memory by each worker (providing quick access for the gpu)
             'num_workers_val_test': 3, # do not need lots of workers for val/test
             'prefetch_factor_val_test': 4 
@@ -173,11 +100,6 @@ hyp = {
     }
 }
 
-hyp["dataset_mode"] = args.dataset_mode
-if hyp["dataset_mode"] == 2:
-    hyp["dataset"]["name"] = "cifar100"
-elif hyp["dataset_mode"] == 1:
-    hyp["dataset"]["name"] = "debug"
 ##################
 ### Training and evaluation
 ##################
@@ -197,17 +119,8 @@ if __name__ == '__main__':
     # load the dataset loaders to iterate over for training and eval
     train_loader, val_loader, _, hyp = get_Dataset_loaders(hyp,['train','val'])
 
-    print("Dataset mode:", hyp["dataset_mode"])
-    print("Number of classes:", hyp["dataset"]["n_classes"])
-    print("Train dataset size:", len(train_loader.dataset))
-    print("Number of train batches:", len(train_loader))
-
-
-    net, net_name = get_network_model(hyp)
-    net = net.float()
     # create the network
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    net_name = f"{net_name}_mode{hyp['dataset_mode']}_{timestamp}"
+    net, net_name = get_network_model(hyp)
     net = net.float()
 
     # creating folders for logging losses/acc and network weights
@@ -284,6 +197,7 @@ if __name__ == '__main__':
         train_acc_running = 0.0
 
         epoch_now = epoch+hyp['misc']['start_from_epoch']
+        print(f'Epoch: {epoch_now}')
         print('LR now: ',optimizer.param_groups[0]['lr'])
 
         epoch_running_init_flag = 0
@@ -293,27 +207,17 @@ if __name__ == '__main__':
             device = f'cuda:{i}'
             torch.cuda.reset_peak_memory_stats(device)
         
-        pbar = tqdm(
-            train_loader,
-            desc=f"Epoch {epoch_now}",
-            leave=True,
-            dynamic_ncols=True
-        )
-        for images, labels in pbar:
+        for images,labels in train_loader:
 
             imgs = images.to(hyp['optimizer']['device'])
             lbls = labels.to(hyp['optimizer']['device'])
             # Move weights to the same device as inputs
-            if criterion.weight is not None:
-                criterion.weight = criterion.weight.to(imgs.device)
+            criterion.weight = criterion.weight.to(imgs.device)
 
             optimizer.zero_grad()
             
             with torch.autocast(device_type='cuda', dtype=torch.float16, enabled=hyp['misc']['use_amp']):
                 outputs = net(imgs)
-                if epoch == 1 and epoch_running_init_flag == 0:
-                    print("Output shape:", outputs[0].shape)
-                    print("Labels shape:", lbls.shape)
                 loss = criterion(outputs[0], lbls.long()) 
                 if len(outputs) > 1:
                     for t in range(len(outputs)-1):
@@ -332,17 +236,10 @@ if __name__ == '__main__':
             # train_loss_running = train_loss_running
             train_acc_running += np.mean(compute_accuracy(outputs,lbls))
 
-            current_acc = np.mean(compute_accuracy(outputs, lbls))
-
-            pbar.set_postfix({
-                "loss": f"{loss.item():.3f}",
-                "acc": f"{current_acc:.2f}%"
-            })
-
             if epoch_running_init_flag == 0:
                 epoch_running_init_flag = 1
-        pbar.close()
-
+                print('Epoch is running - 1 batch done!')
+            
         train_losses.append(train_loss_running/len(train_loader))
         train_accuracies.append(train_acc_running/len(train_loader))
 
@@ -411,52 +308,8 @@ if __name__ == '__main__':
     # getting test loss and acc
     _, _, test_loader, hyp = get_Dataset_loaders(hyp,['test'])
     net.eval()
-    if test_loader is not None:
-        test_loss_running, test_acc_running = eval_network(test_loader, net, criterion, hyp)
-        test_acc = test_acc_running / len(test_loader)
-        print("Test acc:", test_acc)
-    else:
-        print("Skipping test evaluation (no test loader in debug mode)")
-    if test_loader is not None:
-        print(f'Test accuracies over time (%): {test_acc}')
-        print('Saving metrics!')
-        np.savez(log_path+'/loss_'+net_name+'.npz', train_loss=train_losses, val_loss=val_losses, train_accuracies=train_accuracies, val_accuracies=val_accuracies, test_accuracies=test_acc)
-    else:
-        print('Saving metrics!')
-        np.savez(log_path+'/loss_'+net_name+'.npz', train_loss=train_losses, val_loss=val_losses, train_accuracies=train_accuracies, val_accuracies=val_accuracies)
-
-    if hyp["dataset_mode"] != 1:
-
-        print("Saving training plots...")
-
-        epochs = np.arange(1, len(train_losses) + 1)
-
-        # ---- LOSS PLOT ----
-        plt.figure()
-        plt.plot(epochs, train_losses, label="Train Loss")
-        plt.plot(epochs, val_losses, label="Val Loss")
-        plt.xlabel("Epoch")
-        plt.ylabel("Loss")
-        plt.title("Loss Curve")
-        plt.xticks(epochs)  # Force integer ticks
-        plt.legend()
-        plt.tight_layout()
-        plt.savefig(log_path + "/loss_plot.png")
-        plt.close()
-
-        # ---- ACCURACY PLOT ----
-        plt.figure()
-        plt.plot(epochs, train_accuracies, label="Train Accuracy")
-        plt.plot(epochs, val_accuracies, label="Val Accuracy")
-        plt.xlabel("Epoch")
-        plt.ylabel("Accuracy (%)")
-        plt.title("Accuracy Curve")
-        plt.xticks(epochs)  # Force integer ticks
-        plt.legend()
-        plt.tight_layout()
-        plt.savefig(log_path + "/accuracy_plot.png")
-        plt.close()
-
-        print("Plots saved successfully.")
-    else:
-        print("Skipping plot saving (debug dataset mode).")
+    test_loss_running, test_acc_running = eval_network(test_loader,net,criterion,hyp)
+    test_acc = test_acc_running/len(test_loader)
+    print(f'Test accuracies over time (%): {test_acc}')
+    print('Saving metrics!')
+    np.savez(log_path+'/loss_'+net_name+'.npz', train_loss=train_losses, val_loss=val_losses, train_accuracies=train_accuracies, val_accuracies=val_accuracies, test_accuracies=test_acc)
