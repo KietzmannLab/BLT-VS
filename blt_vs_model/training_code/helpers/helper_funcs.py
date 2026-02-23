@@ -113,45 +113,79 @@ def get_Dataset_loaders(hyp, splits):
         print("Using CIFAR100 dataset")
 
         from torchvision.datasets import CIFAR100
-        from torchvision import transforms
         from torch.utils.data import DataLoader
 
-        transform = transforms.Compose([
-            transforms.Resize((224, 224)),  # match BLT input size
+        transform_train = transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.RandomHorizontalFlip(),
             transforms.ToTensor()
         ])
 
-        train_data = CIFAR100(
-            root='./data',
-            train=True,
-            download=True,
-            transform=transform
-        )
+        transform_val_test = transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.ToTensor()
+        ])
 
-        val_data = CIFAR100(
-            root='./data',
-            train=False,
-            download=True,
-            transform=transform
-        )
+        # TRAIN
+        if 'train' in splits:
+            train_data = CIFAR100(
+                root='./data',
+                train=True,
+                download=True,
+                transform=transform_train
+            )
+
+            train_loader = DataLoader(
+                train_data,
+                batch_size=hyp['optimizer']['batch_size'],
+                shuffle=True,
+                num_workers=hyp['optimizer']['dataloader']['num_workers_train']
+            )
+        else:
+            train_loader = None
+
+        # VALIDATION
+        if 'val' in splits:
+            val_data = CIFAR100(
+                root='./data',
+                train=False,
+                download=True,
+                transform=transform_val_test
+            )
+
+            val_loader = DataLoader(
+                val_data,
+                batch_size=hyp['misc']['batch_size_val_test'],
+                shuffle=False,
+                num_workers=hyp['optimizer']['dataloader']['num_workers_val_test']
+            )
+        else:
+            val_loader = None
+
+        # TEST (separate loader, same split)
+        if 'test' in splits:
+            test_data = CIFAR100(
+                root='./data',
+                train=False,
+                download=True,
+                transform=transform_val_test
+            )
+
+            test_loader = DataLoader(
+                test_data,
+                batch_size=hyp['misc']['batch_size_val_test'],
+                shuffle=False,
+                num_workers=hyp['optimizer']['dataloader']['num_workers_val_test']
+            )
+        else:
+            test_loader = None
 
         hyp['dataset']['n_classes'] = 100
         hyp['dataset']['class_weights'] = None
 
-        train_loader = DataLoader(
-            train_data,
-            batch_size=hyp['optimizer']['batch_size'],
-            shuffle=True,
-            num_workers=0
-        )
+        print(f"Number of classes: {hyp['dataset']['n_classes']}")
 
-        val_loader = DataLoader(
-            val_data,
-            batch_size=hyp['misc']['batch_size_val_test'],
-            num_workers=0
-        )
-
-        return train_loader, val_loader, None, hyp
+        return train_loader, val_loader, test_loader, hyp
 
 
     # ==========================================================
