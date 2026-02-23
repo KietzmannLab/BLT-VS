@@ -2,7 +2,7 @@ import torch # type: ignore
 import torch.nn as nn # type: ignore
 import torch.nn.functional as F # type: ignore
 import numpy as np
-
+from tqdm import tqdm
 """
 BLT_VS Architecture
 

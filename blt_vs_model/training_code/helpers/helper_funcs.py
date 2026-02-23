@@ -53,20 +53,20 @@ from collections import Counter
 
 def get_Dataset_loaders(hyp, splits):
 
-    # ===============================
-    # DEBUG MODE: Completely bypass real datasets
-    # ===============================
-    if hyp.get("debug_small_dataset", False):
-        print("Using FakeData debug dataset")
+    import torch
+    import numpy as np
+
+    dataset_mode = hyp.get("dataset_mode", 0)
+
+    # ==========================================================
+    # MODE 1 — FakeData (pure debugging, no real learning)
+    # ==========================================================
+    if dataset_mode == 1:
+        print("Using FakeData dataset")
 
         from torchvision.datasets import FakeData
-        from torch.utils.data import DataLoader
         from torchvision import transforms
-        import torch
-
-        hyp['dataset']['n_classes'] = 665
-        hyp['dataset']['class_weights'] = None
-
+        from torch.utils.data import DataLoader
 
         transform = transforms.Compose([
             transforms.Resize((224, 224)),
@@ -76,16 +76,19 @@ def get_Dataset_loaders(hyp, splits):
         train_data = FakeData(
             size=200,
             image_size=(3, 224, 224),
-            num_classes=665,
+            num_classes=100,
             transform=transform
         )
 
         val_data = FakeData(
             size=50,
             image_size=(3, 224, 224),
-            num_classes=665,
+            num_classes=100,
             transform=transform
         )
+
+        hyp['dataset']['n_classes'] = 100
+        hyp['dataset']['class_weights'] = None
 
         train_loader = DataLoader(
             train_data,
@@ -102,71 +105,187 @@ def get_Dataset_loaders(hyp, splits):
 
         return train_loader, val_loader, None, hyp
 
-    # create Datasets for the splits
+
+    # ==========================================================
+    # MODE 2 — CIFAR100 (real small dataset, local experiments)
+    # ==========================================================
+    if dataset_mode == 2:
+        print("Using CIFAR100 dataset")
+
+        from torchvision.datasets import CIFAR100
+        from torchvision import transforms
+        from torch.utils.data import DataLoader
+
+        transform = transforms.Compose([
+            transforms.Resize((224, 224)),  # match BLT input size
+            transforms.ToTensor()
+        ])
+
+        train_data = CIFAR100(
+            root='./data',
+            train=True,
+            download=True,
+            transform=transform
+        )
+
+        val_data = CIFAR100(
+            root='./data',
+            train=False,
+            download=True,
+            transform=transform
+        )
+
+        hyp['dataset']['n_classes'] = 100
+        hyp['dataset']['class_weights'] = None
+
+        train_loader = DataLoader(
+            train_data,
+            batch_size=hyp['optimizer']['batch_size'],
+            shuffle=True,
+            num_workers=0
+        )
+
+        val_loader = DataLoader(
+            val_data,
+            batch_size=hyp['misc']['batch_size_val_test'],
+            num_workers=0
+        )
+
+        return train_loader, val_loader, None, hyp
+
+
+    # ==========================================================
+    # MODE 0 — Default EcoSet
+    # ==========================================================
     if hyp['dataset']['name'] == 'ecoset':
 
         print('Getting Ecoset ready!')
 
-        dataset_path = hyp['dataset']['dataset_path'] + hyp['dataset']['name'] + '_square256_proper_chunks.h5'
+        dataset_path = (
+            hyp['dataset']['dataset_path']
+            + hyp['dataset']['name']
+            + '_square256_proper_chunks.h5'
+        )
+
+        import h5py
+        from helpers.helper_funcs import calculate_class_weights_from_h5
+        from datasets.ecoset import Ecoset
+        from datasets.transforms import get_transform
+
         with h5py.File(dataset_path, "r") as f:
             hyp['dataset']['n_classes'] = np.max(f['val']['labels'][()]) + 1
-            hyp['dataset']['class_weights'] = calculate_class_weights_from_h5(f['train']['labels'][()])
+            hyp['dataset']['class_weights'] = calculate_class_weights_from_h5(
+                f['train']['labels'][()]
+            )
 
-        # import the transforms (augmentations)
-        transform = get_transform(hyp['dataset']['augment'],hyp)
-        transform_val_test = get_transform(hyp['dataset']['augment_val_test'],hyp)
+        transform = get_transform(hyp['dataset']['augment'], hyp)
+        transform_val_test = get_transform(hyp['dataset']['augment_val_test'], hyp)
 
         if 'train' in splits:
-            train_data = Ecoset('train', dataset_path=dataset_path, in_memory = 0, transform=transform)
-        if 'val' in splits:
-            val_data = Ecoset('val', dataset_path=dataset_path, in_memory = 0, transform=transform_val_test)
-        if 'test' in splits:
-            test_data = Ecoset('test', dataset_path=dataset_path, in_memory = 0, transform=transform_val_test)
+            train_data = Ecoset(
+                'train',
+                dataset_path=dataset_path,
+                in_memory=0,
+                transform=transform
+            )
 
+        if 'val' in splits:
+            val_data = Ecoset(
+                'val',
+                dataset_path=dataset_path,
+                in_memory=0,
+                transform=transform_val_test
+            )
+
+        if 'test' in splits:
+            test_data = Ecoset(
+                'test',
+                dataset_path=dataset_path,
+                in_memory=0,
+                transform=transform_val_test
+            )
+
+
+    # ==========================================================
+    # IMAGENET (if ever needed)
+    # ==========================================================
     elif hyp['dataset']['name'] == 'imagenet':
+
+        from torchvision import datasets
+        from datasets.transforms import get_transform
+        from helpers.helper_funcs import calculate_class_weights_from_imagefolder
 
         dataset_path = hyp['dataset']['dataset_path'] + 'imagenet'
 
         print('Getting Imagenet ready!')
 
-        # import the transforms (augmentations)
-        transform = get_transform(hyp['dataset']['augment'],hyp)
-        transform_val_test = get_transform(hyp['dataset']['augment_val_test'],hyp)      
+        transform = get_transform(hyp['dataset']['augment'], hyp)
+        transform_val_test = get_transform(hyp['dataset']['augment_val_test'], hyp)
 
         if 'train' in splits:
-            train_data = datasets.ImageFolder(root=dataset_path + '/train', transform=transform)
+            train_data = datasets.ImageFolder(
+                root=dataset_path + '/train',
+                transform=transform
+            )
             hyp['dataset']['class_weights'] = calculate_class_weights_from_imagefolder(train_data)
-        if 'val' in splits:
-            val_data = datasets.ImageFolder(root=dataset_path + '/val', transform=transform_val_test) 
-        if 'test' in splits:
-            test_data = datasets.ImageFolder(root=dataset_path + '/val', transform=transform_val_test) # same as val as we don't have access to the test set
 
-        # Number of classes in ImageNet
-        hyp['dataset']['n_classes'] = 1000  # ImageNet has 1000 classes by default
+        if 'val' in splits:
+            val_data = datasets.ImageFolder(
+                root=dataset_path + '/val',
+                transform=transform_val_test
+            )
+
+        if 'test' in splits:
+            test_data = datasets.ImageFolder(
+                root=dataset_path + '/val',
+                transform=transform_val_test
+            )
+
+        hyp['dataset']['n_classes'] = 1000
 
     else:
         print('Dataset not found!')
         return
 
+
     print(dataset_path)
     print(f'Number of classes: {hyp["dataset"]["n_classes"]}')
 
-    # create Dataloaders for the splits
+
+    # ==========================================================
+    # Create DataLoaders
+    # ==========================================================
     if 'train' in splits:
-        train_loader = torch.utils.data.DataLoader(train_data, batch_size=hyp['optimizer']['batch_size'], shuffle=True, num_workers=hyp['optimizer']['dataloader']['num_workers_train'], prefetch_factor=hyp['optimizer']['dataloader']['prefetch_factor_train'])
+        train_loader = torch.utils.data.DataLoader(
+            train_data,
+            batch_size=hyp['optimizer']['batch_size'],
+            shuffle=True,
+            num_workers=hyp['optimizer']['dataloader']['num_workers_train'],
+            prefetch_factor=hyp['optimizer']['dataloader']['prefetch_factor_train']
+        )
     else:
         train_loader = None
 
     if 'val' in splits:
-        val_loader = torch.utils.data.DataLoader(val_data, batch_size=hyp['misc']['batch_size_val_test'], num_workers=hyp['optimizer']['dataloader']['num_workers_val_test'], prefetch_factor=hyp['optimizer']['dataloader']['prefetch_factor_val_test'])
+        val_loader = torch.utils.data.DataLoader(
+            val_data,
+            batch_size=hyp['misc']['batch_size_val_test'],
+            num_workers=hyp['optimizer']['dataloader']['num_workers_val_test'],
+            prefetch_factor=hyp['optimizer']['dataloader']['prefetch_factor_val_test']
+        )
     else:
         val_loader = None
 
     if 'test' in splits:
-        test_loader = torch.utils.data.DataLoader(test_data, batch_size=hyp['misc']['batch_size_val_test'],num_workers=hyp['optimizer']['dataloader']['num_workers_val_test'], prefetch_factor=hyp['optimizer']['dataloader']['prefetch_factor_val_test'])
+        test_loader = torch.utils.data.DataLoader(
+            test_data,
+            batch_size=hyp['misc']['batch_size_val_test'],
+            num_workers=hyp['optimizer']['dataloader']['num_workers_val_test'],
+            prefetch_factor=hyp['optimizer']['dataloader']['prefetch_factor_val_test']
+        )
     else:
         test_loader = None
-        
+
     return train_loader, val_loader, test_loader, hyp
 
 class Ecoset(torch.utils.data.Dataset):
